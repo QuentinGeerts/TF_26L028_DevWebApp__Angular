@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  background-color: #282828;
+  color: white;
+  height: 70px;
+}
+
+p {
+  text-align: center;
+}
