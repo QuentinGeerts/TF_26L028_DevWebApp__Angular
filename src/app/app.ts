@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 import { Demo01Interpolation } from "./features/demonstrations/demo01-interpolation/demo01-interpolation";
 
@@ -9,7 +8,7 @@ import { Sidebar } from './layout/sidebar/sidebar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, Sidebar, Demo01Interpolation],
+  imports: [Header, Footer, Sidebar, Demo01Interpolation],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
