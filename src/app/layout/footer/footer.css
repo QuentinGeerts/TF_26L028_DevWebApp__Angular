@@ -1,10 +1,12 @@
 :host {
-  display: block;
-  background-color: #282828;
-  color: white;
-  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--footer-height);
+  padding: 0 2rem;
 }
 
 p {
-  text-align: center;
+  font-size: .8125rem;
+  color: var(--color-muted);
 }
