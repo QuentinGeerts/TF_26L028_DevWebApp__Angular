@@ -1,23 +1,36 @@
 :host {
   display: grid;
-  grid-template-areas:  "nav header" "nav main" "nav footer";
-  grid-template-rows: 70px auto 70px;
-  grid-template-columns: 250px auto;
+  grid-template-areas: 
+    "nav header" 
+    "nav main" 
+    "nav footer";
+  grid-template-rows: 70px minmax(0, 1fr) 70px;
+  grid-template-columns: 250px 1fr;
+
+  background-color: #bababa;
+  gap: 1px;
+
 }
 
-header {
-  grid: header;
+nav, header, main, footer {
+  background-color: #fff;
 }
 
 nav {
-  grid: nav;
-  height: 100%;
+  grid-area: nav;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+header {
+  grid-area: header;
 }
 
 main {
-  grid: main;
+  grid-area: main;
 }
 
 footer {
-  grid: footer;
+  grid-area: footer;
 }

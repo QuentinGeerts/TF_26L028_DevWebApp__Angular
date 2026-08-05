@@ -1,1 +1,10 @@
-<p>demo01-interpolation works!</p>
+<h3>Démonstration 03 - Data binding - Interpolation</h3>
+
+<p>Utilisation des <code ngNonBindable>{{ expression }}</code> pour afficher la valeur d'une variable typescript en HTML</p>
+
+<p>maVariable1: {{ maVariable1 }}</p>
+<p>maVariable2: {{ maVariable2 }}</p>
+
+<p>(n1: 1) et (nb2: 2) : {{ maMethode1(1, 2) }}</p>
+
+<p>User: {{ maVariable13.email }} {{ maVariable13.firstname }} {{ maVariable13.lastname}} {{ maVariable13.birthdate.toLocaleString("fr-FR", { dateStyle: "short" }) }}</p>
