@@ -1,3 +1,5 @@
+# Exercice 02 - Thermostat
+
 Créer un composant features/exercices/exo02-thermostat
 
 Le composant aura une propriété :

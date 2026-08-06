@@ -8,7 +8,11 @@
 <p>Message: {{ message }}</p> <!-- Affichage de la boite -->
 <p>Message: {{ message() }}</p> <!-- Affichage du contenu de la boite-->
 
+<p>Civilité (signal): {{ civilite() }}</p>
+<p>Civilité (méthode): {{ getCivilite() }} </p>
+
 <p>Compteur: {{ compteur() }}</p>
 
 <button (click)="incrementer()">Incrémenter</button>
 <button (click)="reinitialiser()">Réinitialiser</button>
+<button (click)="toggleGenre()">Changer le genre</button>

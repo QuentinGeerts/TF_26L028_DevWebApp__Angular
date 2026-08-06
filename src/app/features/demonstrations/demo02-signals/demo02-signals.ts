@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { User } from '../demo01-interpolation/models/user.model';
 
 @Component({
@@ -15,10 +15,13 @@ export class Demo02Signals implements OnInit {
 
   compteur: WritableSignal<number> = signal(5);
 
+  
+
   ngOnInit(): void {
     setTimeout(() => {
       this.message.set('Bonjour Jordan !');
       console.log('this.message :>> ', this.message);
+      // this.civilite.set("Madame"); // Impossible de modifier un signal (lecture seule)
     }, 2000);
   }
 
@@ -30,4 +33,20 @@ export class Demo02Signals implements OnInit {
   reinitialiser(): void {
     this.compteur.set(0);
   }
+
+  toggleGenre(): void {
+    this.genre.set(this.genre() === "F" ? "M" : "F");
+  }
+
+  civilite: Signal<string> = computed(() => {
+    console.log("[Signal] Récupération de civilité");
+    return this.genre() === "F" ? "Madame" : "Monsieur"
+  });
+
+  getCivilite(): string {
+    console.log("[Methode] Récupération de civilité");
+    return this.genre() === "F" ? "Madame" : "Monsieur";
+  }
+
+
 }
