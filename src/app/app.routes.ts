@@ -1,8 +1,14 @@
 import { Routes } from '@angular/router';
+
 import { Demo01Interpolation } from './features/demonstrations/demo01-interpolation/demo01-interpolation';
-import { NotFound } from './features/errors/not-found/not-found';
+import { Demo02Signals } from './features/demonstrations/demo02-signals/demo02-signals';
+
 import { Exo01ProfilStatique } from './features/exercices/exo01-profil-statique/exo01-profil-statique';
+
+import { NotFound } from './features/errors/not-found/not-found';
 import { Home } from './features/home/home';
+
+
 
 export const routes: Routes = [
   {
@@ -10,12 +16,21 @@ export const routes: Routes = [
     path: '',
     component: Home,
   },
+
+  // --- Démonstrations ---
   {
     title: 'Démonstration 01 - Interpolation',
     path: 'demo01',
     component: Demo01Interpolation,
   },
+  {
+    title: 'Démonstration 02 - Signals',
+    path: 'demo02',
+    component: Demo02Signals
+  },
 
+
+  // --- Exercices ---
   {
     title: 'Exercice 01 - Profile statique',
     path: 'exo01',
