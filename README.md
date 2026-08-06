@@ -13,7 +13,9 @@ Ce dépôt regroupe la théorie vue au fil des séances, les démonstrations cod
 2. [Création d'un projet](#2-création-dun-projet)
 3. [Anatomie d'un projet Angular](#3-anatomie-dun-projet-angular)
 4. [Création d'un composant](#4-création-dun-composant)
-5. [Contenu du dépôt](#5-contenu-du-dépôt)
+5. [Base du routing](#5-base-du-routing)
+6. [Signals](#6-signals)
+7. [Contenu du dépôt](#7-contenu-du-dépôt)
 
 ---
 
@@ -353,19 +355,170 @@ export class App {}
 
 ---
 
-## 5. Contenu du dépôt
+## 5. Base du routing
+
+Le **routing** (`@angular/router`) permet de faire correspondre une URL à un composant à afficher,
+sans recharger la page.
+
+### Déclarer les routes
+
+**`src/app/app.routes.ts`** — une route est un objet `{ path, component }` dans un tableau `Routes` :
+
+```ts
+import { Routes } from '@angular/router';
+import { Home } from './features/home/home';
+import { Demo01Interpolation } from './features/demonstrations/demo01-interpolation/demo01-interpolation';
+import { NotFound } from './features/errors/not-found/not-found';
+
+export const routes: Routes = [
+  { title: 'Accueil', path: '', component: Home },
+  { title: 'Démonstration 01 - Interpolation', path: 'demo01', component: Demo01Interpolation },
+
+  // Toujours à placer en tant que dernière route !!
+  { path: '**', component: NotFound },
+];
+```
+
+| Propriété | Rôle |
+|---|---|
+| `path` | Segment d'URL (sans `/` initial) — `''` correspond à la racine |
+| `component` | Composant affiché pour ce chemin |
+| `title` | Titre de l'onglet du navigateur pour cette route |
+| `path: '**'` | Route « joker » : capture tout ce qui ne correspond à rien d'autre (404) — **doit rester en dernier** |
+
+### Enregistrer le router
+
+**`src/app/app.config.ts`** — le router est fourni globalement via `provideRouter(routes)` :
+
+```ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes),
+  ],
+};
+```
+
+### Afficher la page active : `<router-outlet>`
+
+Le composant racine importe `RouterOutlet` et place la balise `<router-outlet />` à l'endroit où le
+composant de la route active doit s'afficher :
+
+```ts
+// app.ts
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  imports: [Header, Footer, Sidebar, RouterOutlet],
+  templateUrl: './app.html',
+})
+export class App {}
+```
+
+```html
+<!-- app.html -->
+<main>
+  <router-outlet />
+</main>
+```
+
+### Naviguer : `routerLink` et `routerLinkActive`
+
+Dans un template, `routerLink` remplace le `href` classique (il évite un rechargement complet de la
+page) ; `routerLinkActive` ajoute une classe CSS quand le lien correspond à la route active.
+
+```html
+<!-- sidebar.html -->
+<a routerLink="/" routerLinkActive="active">Accueil</a>
+<a routerLink="/demo01" routerLinkActive="active">01. Interpolation</a>
+```
+
+> **À retenir** : chaque nouveau composant de page doit être 1) déclaré dans `app.routes.ts` avec un
+> `path`, puis 2) relié par un `routerLink` (typiquement dans la `Sidebar`).
+
+---
+
+## 6. Signals
+
+Un **signal** est un conteneur de valeur réactif : Angular sait quand sa valeur change et met à jour
+automatiquement tout ce qui en dépend (template, `computed`…), sans avoir à demander explicitement un
+rafraîchissement.
+
+### Créer et typer un signal
+
+```ts
+import { signal, WritableSignal } from '@angular/core';
+
+// Typage inféré automatiquement à partir de la valeur initiale
+message: WritableSignal<string> = signal('Chargement...');
+
+// Typage explicite nécessaire quand la valeur initiale ne suffit pas à déduire le type
+genre: WritableSignal<'M' | 'F'> = signal('M');
+message1: WritableSignal<User | null> = signal(null);
+```
+
+### Lire, modifier
+
+| Opération | Syntaxe | Remarque |
+|---|---|---|
+| **Lire** | `this.compteur()` | Un signal se lit en l'**appelant** comme une fonction |
+| **Remplacer** | `this.compteur.set(0)` | Remplace la valeur par une nouvelle |
+| **Dériver de l'ancienne valeur** | `this.compteur.update((v) => v + 1)` | ✅ à préférer à `set` quand la nouvelle valeur dépend de l'ancienne |
+
+```ts
+incrementer(): void {
+  this.compteur.update((v) => v + 1);
+}
+
+reinitialiser(): void {
+  this.compteur.set(0);
+}
+```
+
+Dans le template, un signal s'affiche également en l'appelant : `{{ compteur() }}`.
+
+### `computed` : une valeur dérivée
+
+`computed()` crée un **signal en lecture seule**, recalculé automatiquement seulement quand un des
+signaux qu'il utilise change (et mis en cache tant que rien n'a changé) :
+
+```ts
+import { computed, Signal } from '@angular/core';
+
+genre: WritableSignal<'M' | 'F'> = signal('M');
+
+civilite: Signal<string> = computed(() => {
+  return this.genre() === 'F' ? 'Madame' : 'Monsieur';
+});
+```
+
+```ts
+// this.civilite.set('Madame'); // ❌ impossible : un computed est en lecture seule
+```
+
+> **`computed` vs méthode classique** : une méthode (`getCivilite()`) est **ré-exécutée à chaque cycle
+> de détection de changement**, même si rien n'a changé. Un `computed` n'est ré-évalué que si l'un des
+> signaux qu'il lit a changé de valeur — plus performant pour une valeur dérivée affichée souvent.
+
+---
+
+## 7. Contenu du dépôt
 
 ### Démonstrations
 
 | # | Sujet | Emplacement |
 |---|---|---|
 | 01 | Interpolation & types TypeScript | `src/app/features/demonstrations/demo01-interpolation/` |
+| 02 | Signals (`signal`, `computed`, `set`, `update`) | `src/app/features/demonstrations/demo02-signals/` |
 
 ### Exercices
 
-| # | Énoncé |
-|---|---|
-| 01 | [Profil statique](exercices/exercice01-profil-statique.md) |
+| # | Énoncé | Emplacement |
+|---|---|---|
+| 01 | [Profil statique](exercices/exercice01-profil-statique.md) | `src/app/features/exercices/exo01-profil-statique/` |
+| 02 | [Thermostat](exercices/exercice02-thermostat.md) | `src/app/features/exercices/exo02-thermostat/` |
+| 03 | [Panier](exercices/exercice03-panier.md) | — |
 
 ### Layout
 
