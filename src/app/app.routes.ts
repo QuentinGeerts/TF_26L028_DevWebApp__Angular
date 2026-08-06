@@ -5,21 +5,21 @@ import { Home } from './features/home/home';
 
 export const routes: Routes = [
   {
-    title: "Accueil",
-    path: "",
-    component: Home
+    title: 'Accueil',
+    path: '',
+    component: Home,
   },
   {
-    title: "Démonstration 01 - Profil statique",
-    path: "demo01",
-    component: Demo01Interpolation
+    title: 'Démonstration 01 - Profil statique',
+    path: 'demo01',
+    component: Demo01Interpolation,
   },
 
   // TODO: créer la route pour l'exercice
 
   // Toujours à placer en tant que dernière route !!
   {
-    path: "**",
-    component: NotFound
-  }
+    path: '**',
+    component: NotFound,
+  },
 ];
