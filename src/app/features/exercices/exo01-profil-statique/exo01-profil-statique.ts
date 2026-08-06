@@ -12,6 +12,6 @@ export class Exo01ProfilStatique {
   firstname: string = 'Quentin';
   birthdate: Date = new Date('1996-04-03');
   imageUrl: string = 'https://images3.alphacoders.com/951/thumb-1920-95115.jpg';
-  gender: 'M' | 'F' = 'F';
+  gender: 'M' | 'F' = 'M';
   languages: string[] = ['Français', 'Anglais', 'Néerlandais', 'Japonais'];
 }
