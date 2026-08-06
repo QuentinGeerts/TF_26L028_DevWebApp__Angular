@@ -1,0 +1,10 @@
+<h3>Exercice 01 - Profil statique</h3>
+
+<img class="image-profile" src="{{ imageUrl }}" alt="Photo de {{ firstname }}">
+
+<p>{{ gender === "F" ? "Madame" : "Monsieur" }} {{ firstname }} {{lastname}}</p>
+
+<p>Email: {{ email }}</p>
+<p>Date de naissance: {{ birthdate }}</p>
+
+<p>Langues parlées: {{ languages.join(", ") }}</p>
