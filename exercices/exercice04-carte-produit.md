@@ -23,7 +23,7 @@ Prix: 29.99
 Stock: 3 article(s) <- en rouge quand le stock vaut 0
 Statut: En stock 
 
-[Ajouter au panier] [Vendre 1] [Réapprovisionner] [Agrandir l'image]
+[Ajouter au panier] [Réapprovisionner] [Agrandir l'image]
 
 Renommer le produit: [___________]
 Note du vendre: [___________]
@@ -33,8 +33,7 @@ Note actuelle: ...
 ## Comportements attendus:
 
 - L'image utilise l'URL, la description et la taille stockées dans le composant
-- [Ajouter au panier] est désactivé quand le stock vaut 0
-- [Vendre 1] diminue le stock de 1, jamais en-dessous de 0
+- [Ajouter au panier] diminue le stock de 1, jamais en-dessous de 0, est désactivé quand le stock vaut 0
 - [Réapprovisionner] remet le stock à 3
 - [Agrandir l'image] augmente la taille de 30
 - Le badge [PROMO] n'est visible que si le produit est en promotion

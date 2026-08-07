@@ -11,6 +11,7 @@ import { Exo02Thermostat } from './features/exercices/exo02-thermostat/exo02-the
 import { Exo03Panier } from './features/exercices/exo03-panier/exo03-panier';
 
 import { NotFound } from './features/errors/not-found/not-found';
+import { Exo04CarteProduit } from './features/exercices/exo04-carte-produit/exo04-carte-produit';
 import { Home } from './features/home/home';
 
 
@@ -65,6 +66,11 @@ export const routes: Routes = [
     title: 'Exercice 03 - Panier',
     path: 'exo03',
     component: Exo03Panier
+  },
+  {
+    title: 'Exercice 04 - Carte panier',
+    path: 'exo04',
+    component: Exo04CarteProduit
   },
   
   // Toujours à placer en tant que dernière route !!

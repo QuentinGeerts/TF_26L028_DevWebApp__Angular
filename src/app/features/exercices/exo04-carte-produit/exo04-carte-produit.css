@@ -1,0 +1,14 @@
+.badge {
+  display: none;
+}
+
+.badge-visible {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: .1rem .5rem;
+  border-radius: 999px;
+  margin-left: .5rem;
+}

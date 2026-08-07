@@ -1,0 +1,25 @@
+<h2>Exercice 04 - Carte produit</h2>
+
+<img [src]="urlImage()" [alt]="description()" [width]="tailleImage()" />
+
+<p>
+  {{ nom() }}
+  <span class="badge" [class.badge-visible]="estEnPromotion()">PROMO</span>
+</p>
+
+<p>Prix: {{ prix() }} €</p>
+<p [style.color]="couleurStock()">Stock: {{ stock() }} article(s)</p>
+<p>Statut: {{ status() }}</p>
+
+<button (click)="ajouterPanier()" [disabled]="!estEnStock()">Ajouter au panier</button>
+<button (click)="reapprovisionner()">Réapprovisionner</button>
+<button (click)="agrandirImage()">Agrandir l'image</button>
+
+<h3>Renommer le produit</h3>
+<input type="text" [value]="nom()" (keyup.Enter)="renommer($event)">
+
+<h3>Note du vendeur</h3>
+<input type="text" [(ngModel)]="noteVendeur" (keyup.Escape)="viderNote()">
+<p>Note du vendeur: {{ noteVendeur }}</p>
+
+<p>Valeur du stock restant: {{ valeurStock() }}</p>

@@ -195,3 +195,9 @@ button + button,
 .btn + .btn {
   margin-left: .75rem;
 }
+
+img {
+  border-radius: var(--radius);
+  display: block;
+  margin-bottom: 1rem;
+}
