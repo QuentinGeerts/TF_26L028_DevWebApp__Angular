@@ -1,0 +1,19 @@
+<h2>Exercice 03 - Panier</h2>
+
+<p>Prix unitaire: {{ prixUnitaire() }} €</p>
+
+<div>
+  <button (click)="augmenterPrix()">+5 €</button>
+  <button (click)="diminuerPrix()">-5 €</button>
+</div>
+
+<p>Quantité: {{ quantite() }}</p>
+
+<div>
+  <button (click)="augmenterQuantite()">+</button>
+  <button (click)="diminuerQuantite()">-</button>
+</div>
+
+<p>Total HT: {{ totalHT() }} €</p>
+<p>TVA (20%): {{ tva() }} €</p>
+<p>Total TTC: {{ totalTTC() }} €</p>

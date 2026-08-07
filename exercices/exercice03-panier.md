@@ -34,5 +34,5 @@ Le total HT, la TVA et le total TTC doivent être calculé
 ---
 
 Bonus : 
-- Empêcher la quantité de descendre en dessoUS de 1
+- Empêcher la quantité de descendre en dessous de 1
 - Empêcher le prix unitaire de devenir négatif
