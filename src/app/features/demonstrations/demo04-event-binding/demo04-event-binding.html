@@ -1,0 +1,32 @@
+<h2>Démonstration 04 - Event Binding</h2>
+
+<div class="tips">
+  <span>
+    Les parenthèses <code ngNonBindable>(evenement)="methode()"</code> exécutent du TypeScript
+    lorsque l'événement se produit sur le template.
+  </span>
+</div>
+
+<p>Journal: {{ journal() }}</p>
+
+<button (click)="saluer('Jean')">Saluer Jean</button>
+<button (click)="saluer('Mischael')">Saluer Mischael</button>
+
+<h3>D'autres événements que le clic</h3>
+
+<p (mouseenter)="survoler()" (mouseleave)="sortir()">Passez la souris ici.</p>
+
+<h3>Récupérer la saisie avec $event</h3>
+
+<input 
+  type="text" 
+  placeholder="Tapez quelque chose ici..." 
+  [value]="saisie()" 
+  (input)="surSaisie($event)">
+
+<p>Vous avez tapé : {{ saisie() }}</p>
+
+<h3>Filtrer un événement input sur une touche</h3>
+
+<input type="text" (keyup.Enter)="surEntree($event)">
+<input type="text" (keyup.alt.r)="surEntree($event)">
