@@ -7,7 +7,6 @@ import { Component, signal, WritableSignal } from '@angular/core';
   styleUrl: './demo03-property-binding.css',
 })
 export class Demo03PropertyBinding {
-  
   estDesactive: WritableSignal<boolean> = signal(false);
 
   urlPhoto: WritableSignal<string> = signal(
@@ -16,13 +15,28 @@ export class Demo03PropertyBinding {
   description: WritableSignal<string> = signal('Une photo de Garfield');
   taillePhotoLongueur: WritableSignal<number> = signal(200);
 
-  prenom: WritableSignal<string> = signal("Quentin");
+  prenom: WritableSignal<string> = signal('Quentin');
+
+  estActif: WritableSignal<boolean> = signal(true);
+  couleurText: WritableSignal<string> = signal('#147852');
+  largeurBarre: WritableSignal<number> = signal(50);
 
   toggleDisabled() {
     this.estDesactive.update((v) => !v);
   }
 
   agrandirPhoto() {
-    this.taillePhotoLongueur.update(t => t + 30);
+    this.taillePhotoLongueur.update((t) => t + 30);
+  }
+
+  toggleActif() {
+    this.estActif.update((v) => !v);
+  }
+
+  diminuerBarre() {
+    this.largeurBarre.update((v) => Math.max(0, v - 10));
+  }
+  augmenterBarre() {
+    this.largeurBarre.update((v) => Math.min(100, v + 10));
   }
 }

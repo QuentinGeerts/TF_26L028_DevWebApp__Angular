@@ -2,7 +2,8 @@
 
 <div class="tips">
   <span>
-    Les crochets <code ngNonBindable>[propriete]="expression"</code> évaluent du TypeScript et le posent sur la propriété de l'élément. Sans crochet, c'est du texte.
+    Les crochets <code ngNonBindable>[propriete]="expression"</code> évaluent du TypeScript et le
+    posent sur la propriété de l'élément. Sans crochet, c'est du texte.
   </span>
 </div>
 
@@ -13,9 +14,13 @@
   <button [disabled]="true">Bouton B1</button>
   <button [disabled]="false">Bouton B2</button>
 
-  <button [disabled]="estDesactive()">Property Binding (correct) [état: {{ estDesactive() }}] ❤️</button>
+  <button [disabled]="estDesactive()">
+    Property Binding (correct) [état: {{ estDesactive() }}] ❤️
+  </button>
 
-  <button disabled="{{ estDesactive() }}">Interpolation (toujours désactivé) [état: {{ estDesactive() }}] 💩</button>
+  <button disabled="{{ estDesactive() }}">
+    Interpolation (toujours désactivé) [état: {{ estDesactive() }}] 💩
+  </button>
 </div>
 
 <button (click)="toggleDisabled()">Basculer la désactivation</button>
@@ -24,18 +29,50 @@
 
 <button (click)="agrandirPhoto()">Agrandir</button>
 
-<img 
-  [src]="urlPhoto()" 
-  [alt]="description()"
-  [width]="taillePhotoLongueur()" 
-/>
+<img [src]="urlPhoto()" [alt]="description()" [width]="taillePhotoLongueur()" />
 
 <h3>Sur un champ de saisie</h3>
 
-<input type="text" [value]="prenom()">
+<input type="text" [value]="prenom()" />
 <p>La propriété value vaut: {{ prenom() }}</p>
 <div class="tips">
   <span>
-    Le property binding étant en One-Way, la valeur est récupérée du TS et affichée dans le template. Si nous mettons à jour le champ, la modification ne se fait pas dans le TS.
+    Le property binding étant en One-Way, la valeur est récupérée du TS et affichée dans le
+    template. Si nous mettons à jour le champ, la modification ne se fait pas dans le TS.
   </span>
 </div>
+
+
+<h3>Attribut class :</h3>
+
+<div class="tips">
+  <span>
+    <code ngNonBindable>[class.ma-classe]="condition"</code> ajoute la classe si l'expression est
+    vraie, la retire si l'expression est fausse.
+  </span>
+</div>
+
+<p class="etiquette {{ estActif() ? 'etiquette-active' : '' }}">Concaténation à la main 💩</p>
+<p class="etiquette" [class.etiquette-active]="estActif()">Class binding ❤️</p>
+
+<button (click)="toggleActif()">Basculer l'état actif</button>
+
+
+<h3>Attribut style :</h3>
+
+<div class="tips">
+  <span>
+    <code ngNonBindable>[style.propriete.unite]="valeur"</code> ajoute le style avec une valeur provenant du TypeScript.
+  </span>
+</div>
+
+<p [style.color]="couleurText()">Ce texte prend la couleur du signal {{ couleurText() }}</p>
+
+<div class="jauge">
+  <div class="jauge-remplissage" [style.width.%]="largeurBarre()"></div>
+</div>
+
+<p>Largeur: {{ largeurBarre() }}</p>
+
+<button (click)="diminuerBarre()">-10%</button>
+<button (click)="augmenterBarre()">+10%</button>
