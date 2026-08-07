@@ -1,0 +1,22 @@
+<h2>Démonstration 05 - Two-Way Binding</h2>
+
+<div class="tips">
+  <span>
+    Le two-wat binding n'est pas une nouvelle mécanique : c'est un property binding et un event binding réunis dans une seule écriture.
+  </span>
+</div>
+
+<h3>Version manuelle :</h3>
+
+<input type="text" [value]="name()" (input)="onInput($event)">
+
+<p>Bonjour {{ name() }}</p>
+
+<button (click)="reset()">Réinitialiser</button>
+
+
+<h3>Version automatisée ( ngModel ) :</h3>
+
+<!-- [()] : Banane dans la boite -->
+<input type="text" [(ngModel)]="day">
+<p>Jour: {{ day }}</p>

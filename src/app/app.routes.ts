@@ -4,6 +4,7 @@ import { Demo01Interpolation } from './features/demonstrations/demo01-interpolat
 import { Demo02Signals } from './features/demonstrations/demo02-signals/demo02-signals';
 import { Demo03PropertyBinding } from './features/demonstrations/demo03-property-binding/demo03-property-binding';
 import { Demo04EventBinding } from './features/demonstrations/demo04-event-binding/demo04-event-binding';
+import { Demo05TwowayBinding } from './features/demonstrations/demo05-twoway-binding/demo05-twoway-binding';
 
 import { Exo01ProfilStatique } from './features/exercices/exo01-profil-statique/exo01-profil-statique';
 import { Exo02Thermostat } from './features/exercices/exo02-thermostat/exo02-thermostat';
@@ -41,6 +42,11 @@ export const routes: Routes = [
     title: 'Démonstration 04 - Event Binding',
     path: 'demo04',
     component: Demo04EventBinding
+  },
+  {
+    title: 'Démonstration 05 - Two-Way Binding',
+    path: 'demo05',
+    component: Demo05TwowayBinding
   },
 
 
