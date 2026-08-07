@@ -13,9 +13,10 @@ Ce dépôt regroupe la théorie vue au fil des séances, les démonstrations cod
 2. [Création d'un projet](#2-création-dun-projet)
 3. [Anatomie d'un projet Angular](#3-anatomie-dun-projet-angular)
 4. [Création d'un composant](#4-création-dun-composant)
-5. [Base du routing](#5-base-du-routing)
-6. [Signals](#6-signals)
-7. [Contenu du dépôt](#7-contenu-du-dépôt)
+5. [Le data binding](#5-le-data-binding)
+6. [Base du routing](#6-base-du-routing)
+7. [Signals](#7-signals)
+8. [Contenu du dépôt](#8-contenu-du-dépôt)
 
 ---
 
@@ -355,7 +356,125 @@ export class App {}
 
 ---
 
-## 5. Base du routing
+## 5. Le data binding
+
+Le **data binding** est la liaison entre la classe TypeScript d'un composant et son template HTML.
+Angular propose 4 syntaxes, chacune avec un sens de circulation de la donnée différent.
+
+| Syntaxe | Nom | Sens |
+|---|---|---|
+| `{{ expression }}` | Interpolation | TS → HTML (texte) |
+| `[propriete]="expression"` | Property binding | TS → HTML (propriété DOM) |
+| `(evenement)="methode()"` | Event binding | HTML → TS |
+| `[(ngModel)]="propriete"` | Two-way binding | TS ↔ HTML |
+
+### Interpolation
+
+Affiche une valeur TypeScript comme **texte** dans le template (voir `demo01-interpolation`) :
+
+```html
+<p>{{ maVariable1 }}</p>
+```
+
+### Property binding
+
+Les crochets `[propriete]="expression"` évaluent du TypeScript et posent le résultat sur une
+**propriété** de l'élément DOM (pas un attribut HTML). Sans crochets, la valeur est toujours du texte
+figé, même écrite entre guillemets :
+
+```html
+<!-- ❌ toujours désactivé, même avec "false" : c'est un attribut texte -->
+<button disabled="false">Bouton</button>
+
+<!-- ✅ dépend de la valeur du signal -->
+<button [disabled]="estDesactive()">Bouton</button>
+
+<img [src]="urlPhoto()" [alt]="description()" [width]="taillePhotoLongueur()" />
+```
+
+Deux variantes utiles du property binding :
+
+| Syntaxe | Rôle |
+|---|---|
+| `[class.ma-classe]="condition"` | Ajoute la classe CSS si `condition` est vraie, la retire sinon |
+| `[style.propriete.unite]="valeur"` | Applique un style inline avec une valeur (et une unité en option) |
+
+```html
+<p class="etiquette" [class.etiquette-active]="estActif()">Class binding</p>
+
+<div class="jauge-remplissage" [style.width.%]="largeurBarre()"></div>
+<p [style.color]="couleurText()">Texte coloré depuis le TS</p>
+```
+
+> `demo03-property-binding` illustre ces trois cas (attribut simple, `class.`, `style.`).
+
+### Event binding
+
+Les parenthèses `(evenement)="methode()"` exécutent une méthode TypeScript lorsque l'événement se
+produit sur l'élément. `$event` donne accès à l'objet événement natif du DOM :
+
+```html
+<button (click)="saluer('Jean')">Saluer Jean</button>
+
+<p (mouseenter)="survoler()" (mouseleave)="sortir()">Survolez-moi</p>
+
+<input (input)="surSaisie($event)">
+```
+
+```ts
+surSaisie(event: InputEvent) {
+  const champ = event.target as HTMLInputElement;
+  this.saisie.set(champ.value);
+}
+```
+
+Angular permet aussi de **filtrer un événement clavier** sur une touche précise, directement dans le
+nom de l'événement :
+
+```html
+<input type="text" (keyup.Enter)="surEntree($event)">
+<input type="text" (keyup.alt.r)="surEntree($event)">
+```
+
+> `demo04-event-binding` illustre `click`, `mouseenter`/`mouseleave`, `input` et le filtrage `keyup.*`.
+
+### Two-way binding
+
+Le two-way binding n'est pas une nouvelle mécanique : c'est un **property binding + event binding**
+réunis dans une seule écriture, pour garder une valeur synchronisée dans les deux sens.
+
+**Version manuelle** (property binding `[value]` + event binding `(input)`) :
+
+```html
+<input type="text" [value]="name()" (input)="onInput($event)">
+```
+
+**Version automatisée avec `[(ngModel)]`** (la « banane dans la boîte » : `[()]`) — nécessite
+d'importer `FormsModule` dans le composant :
+
+```ts
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  imports: [FormsModule], // ⚠️ obligatoire pour ngModel
+  // ...
+})
+export class Demo05TwowayBinding {
+  day: string = 'Lundi';
+}
+```
+
+```html
+<input type="text" [(ngModel)]="day">
+<p>Jour: {{ day }}</p>
+```
+
+> `demo05-twoway-binding` compare les deux versions. `ngModel` fonctionne aussi bien avec une simple
+> propriété qu'avec un signal.
+
+---
+
+## 6. Base du routing
 
 Le **routing** (`@angular/router`) permet de faire correspondre une URL à un composant à afficher,
 sans recharger la page.
@@ -434,12 +553,20 @@ page) ; `routerLinkActive` ajoute une classe CSS quand le lien correspond à la 
 <a routerLink="/demo01" routerLinkActive="active">01. Interpolation</a>
 ```
 
+Par défaut, `routerLinkActive` matche dès que la route active **commence par** le `routerLink` — le
+lien `/` resterait donc actif sur toutes les pages. `[routerLinkActiveOptions]="{ exact: true }"` force
+une correspondance exacte, utile pour le lien d'accueil :
+
+```html
+<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+```
+
 > **À retenir** : chaque nouveau composant de page doit être 1) déclaré dans `app.routes.ts` avec un
 > `path`, puis 2) relié par un `routerLink` (typiquement dans la `Sidebar`).
 
 ---
 
-## 6. Signals
+## 7. Signals
 
 Un **signal** est un conteneur de valeur réactif : Angular sait quand sa valeur change et met à jour
 automatiquement tout ce qui en dépend (template, `computed`…), sans avoir à demander explicitement un
@@ -503,7 +630,7 @@ civilite: Signal<string> = computed(() => {
 
 ---
 
-## 7. Contenu du dépôt
+## 8. Contenu du dépôt
 
 ### Démonstrations
 
@@ -511,6 +638,9 @@ civilite: Signal<string> = computed(() => {
 |---|---|---|
 | 01 | Interpolation & types TypeScript | `src/app/features/demonstrations/demo01-interpolation/` |
 | 02 | Signals (`signal`, `computed`, `set`, `update`) | `src/app/features/demonstrations/demo02-signals/` |
+| 03 | Property binding (`[prop]`, `class.`, `style.`) | `src/app/features/demonstrations/demo03-property-binding/` |
+| 04 | Event binding (`(event)`, `$event`, `keyup.*`) | `src/app/features/demonstrations/demo04-event-binding/` |
+| 05 | Two-way binding (manuel et `[(ngModel)]`) | `src/app/features/demonstrations/demo05-twoway-binding/` |
 
 ### Exercices
 
@@ -518,7 +648,8 @@ civilite: Signal<string> = computed(() => {
 |---|---|---|
 | 01 | [Profil statique](exercices/exercice01-profil-statique.md) | `src/app/features/exercices/exo01-profil-statique/` |
 | 02 | [Thermostat](exercices/exercice02-thermostat.md) | `src/app/features/exercices/exo02-thermostat/` |
-| 03 | [Panier](exercices/exercice03-panier.md) | — |
+| 03 | [Panier](exercices/exercice03-panier.md) | `src/app/features/exercices/exo03-panier/` |
+| 04 | Carte produit | `src/app/features/exercices/exo04-carte-produit/` |
 
 ### Layout
 
