@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { Demo01Interpolation } from './features/demonstrations/demo01-interpolation/demo01-interpolation';
 import { Demo02Signals } from './features/demonstrations/demo02-signals/demo02-signals';
+import { Demo03PropertyBinding } from './features/demonstrations/demo03-property-binding/demo03-property-binding';
 
 import { Exo01ProfilStatique } from './features/exercices/exo01-profil-statique/exo01-profil-statique';
 import { Exo02Thermostat } from './features/exercices/exo02-thermostat/exo02-thermostat';
@@ -29,6 +30,11 @@ export const routes: Routes = [
     title: 'Démonstration 02 - Signals',
     path: 'demo02',
     component: Demo02Signals
+  },
+  {
+    title: 'Démonstration 03 - Property Binding',
+    path: 'demo03',
+    component: Demo03PropertyBinding
   },
 
 
