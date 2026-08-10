@@ -16,6 +16,7 @@ import { Exo04CarteProduit } from './features/exercices/exo04-carte-produit/exo0
 import { Home } from './features/home/home';
 import { Exo05Compteur } from './features/exercices/exo05-compteur/exo05-compteur';
 import { Demo07Directives } from './features/demonstrations/demo07-directives/demo07-directives';
+import { ProductList } from './features/exercices/product-list/product-list';
 
 
 
@@ -89,6 +90,11 @@ export const routes: Routes = [
     title : 'Exercice 05 Compteur',
     path : 'exo05',
     component : Exo05Compteur
+  },
+  {
+    title : ' Exercice 06 Product List',
+    path : 'exo06',
+    component : ProductList
   },
   
   // Toujours à placer en tant que dernière route !!
