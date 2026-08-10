@@ -1,0 +1,19 @@
+<p>exo 05 compteur</p>
+
+<div>
+    <h4>Sans Pipe</h4>
+    <p>{{minutes()}}m :{{secondes()}}s</p>
+
+    <button (click)="start()" [disabled]="countActive()">start</button>
+    <button (click)="pause()" [disabled]="!countActive()">pause</button>
+    <button (click)="reset()" [disabled]="!resetOk()">reset</button>
+</div>
+
+<div>
+    <h4>Avec Pipe</h4>
+    <p>{{secondesPipe() | count}}</p>
+
+    <button (click)="startPipe()" >start</button>
+    <button (click)="pausePipe()" >pause</button>
+    <button (click)="resetPipe()" >reset</button>
+</div>

@@ -14,6 +14,7 @@ import { Exo03Panier } from './features/exercices/exo03-panier/exo03-panier';
 import { NotFound } from './features/errors/not-found/not-found';
 import { Exo04CarteProduit } from './features/exercices/exo04-carte-produit/exo04-carte-produit';
 import { Home } from './features/home/home';
+import { Exo05Compteur } from './features/exercices/exo05-compteur/exo05-compteur';
 
 
 
@@ -77,6 +78,11 @@ export const routes: Routes = [
     title: 'Exercice 04 - Carte panier',
     path: 'exo04',
     component: Exo04CarteProduit
+  },
+  {
+    title : 'Exercice 05 Compteur',
+    path : 'exo05',
+    component : Exo05Compteur
   },
   
   // Toujours à placer en tant que dernière route !!
