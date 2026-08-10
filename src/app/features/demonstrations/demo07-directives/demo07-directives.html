@@ -1,11 +1,22 @@
-<p>demo07-directives works!</p>
+<p>Demo Directives</p>
 
 <div class="card">
-    <p>Valeur pour gérer l'affichage d'un élément</p>
+    <p>Les directives Permettent de gérer le rendu de notre page html grace à des conditions comme</p>
+    <ul>
+        <li>IF</li>
+        <li>For</li>
+        <li>Switch</li>
+    </ul>
+
+</div>
+
+<div class="card">
+    <p>Valeur pour gérer l'affichage d'un élément on utilise un booléen :</p>
     <p>est connecter : {{isLogged()}}</p>
     <button (click)="toggleIsLogged()">Change</button>
 
 
+    <p>Utilisation de plusieurs If</p>
     @if(!isLogged()){
 
     <div>
@@ -25,6 +36,7 @@
 </div>
 
 <div class="card">
+    <p>Utilisation de if - else</p>
     @if(isLogged()){
     <div>
         <h4>Bonjour vous êtes connectez.</h4>
@@ -58,6 +70,7 @@
 
 <div>
     <h4>For avec un signal</h4>
+    <p>Même fonctionnement que sans signal , ne pas oublier les parenthèze.</p>
     @for (p of productsSignal(); track p.id) {
             <li class="card">
                 <p>{{p.name}}</p>
@@ -69,6 +82,8 @@
 </div>
 
 <div>
+    <p>Le switch permet de gérer l'affichage en fonction d'une valeur exacte</p>
+    <p>Si une condition est nécéssaire utiliser la directive if</p>
     <h4>Switch</h4>
     @switch (dayOfWeek()) {
         @case (1) {
@@ -88,6 +103,7 @@
 
 <div class="card">
     <h4>Affichage complet</h4>
+    <p>Utilisation de plusieurs directives ensembles</p>
     <ul class="mt-1">
 
         @for (p of productsFull(); track $index) {
