@@ -9,7 +9,7 @@ import { SharedModule } from './shared/shared-module';
   imports: [
     FormsModule,
     SharedModule // Utilisation d'un module pour regrouper les imports 
-    
+
     // CommonModule, // Common Module Permet d'avoir accès à tous les pipes de base
     // EmojiPipePipe // Lorsqu'on crée un pipe il faut l'importer
   ],
@@ -45,6 +45,6 @@ informationJson = {
 }
 
 // pipe personnalisé
-valeuremoji : string = "Entrez une valeur"
+valeuremoji : string = "valeur"
 
 }
