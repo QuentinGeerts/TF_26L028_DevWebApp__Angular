@@ -1,0 +1,166 @@
+<p>demo07-directives works!</p>
+
+<div class="card">
+    <p>Valeur pour gérer l'affichage d'un élément</p>
+    <p>est connecter : {{isLogged()}}</p>
+    <button (click)="toggleIsLogged()">Change</button>
+
+
+    @if(!isLogged()){
+
+    <div>
+        <h4>Bonjour connectez-vous.</h4>
+        <p>Vous devez être connectez pour accéder au site</p>
+    </div>
+    }
+
+
+    @if(isLogged()){
+
+    <div>
+        <h4>Bonjour vous êtes connectez.</h4>
+        <p>Bienvenue sur le site</p>
+    </div>
+    }
+</div>
+
+<div class="card">
+    @if(isLogged()){
+    <div>
+        <h4>Bonjour vous êtes connectez.</h4>
+        <p>Bienvenue sur le site</p>
+    </div>
+    }
+    @else{
+    <div>
+        <h4>Bonjour connectez-vous.</h4>
+        <p>Vous devez être connectez pour accéder au site</p>
+    </div>
+    }
+</div>
+
+<div class="card">
+    <h4>For</h4>
+    <p>La directive FOR Permet de parcourir une collection et de définir un affichage commun pour chacun des éléments de la liste</p>
+    <p>parcourir une collection simple</p>
+    <ul>
+        @for (p of products; track $index) {
+            <li class="card">
+                <p>{{p.name}}</p>
+                <p>{{p.price}}</p>
+                <p>{{p.stock}}</p>
+                <p>{{$index}}</p>
+                <button (click)="deleteProduct($index)">Delete</button>
+            </li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h4>For avec un signal</h4>
+    @for (p of productsSignal(); track p.id) {
+            <li class="card">
+                <p>{{p.name}}</p>
+                <p>{{p.price}}</p>
+                <p>{{p.stock}}</p>
+                <button (click)="removeItem(p.id)">Delete</button>
+            </li>
+    }
+</div>
+
+<div>
+    <h4>Switch</h4>
+    @switch (dayOfWeek()) {
+        @case (1) {
+            <p>Nous sommes lundi</p>
+        }
+        @case (2) {
+            <p>Nous sommes Mardi</p>
+        }
+        @case (3) {
+            <p>Nous sommes Mercredi</p>
+        }
+    }
+</div>
+
+<div class="card">
+    <h4>Affichage complet</h4>
+    <ul class="mt-1">
+
+        @for (p of productsFull(); track $index) {
+            @if(p.promo){
+                <div class="bg-green card">
+
+                    <p>{{p.name}}</p>
+                    <p>{{p.stock}}</p>
+                    <p class="font-green">{{p.price}}</p>
+                    @if(p.stock < 5){
+                        <p>Article bientot en rupture de stock</p>
+                    }
+                    @if(p.stock > 5){
+                        <p>Article disponible en quantité</p>
+                    }
+
+                    @switch(p.stock){
+                        @case (0) {
+                            <p>Ce produit est indisponible pour le moment</p>
+                        }
+                        @case(10){
+                            <p>Il reste 10 exemplaires</p>
+                        }
+                    }
+                </div>
+                
+            }
+            @else {
+                <div class="card">
+                    <p>{{p.name}}</p>
+                    <p>{{p.stock}}</p>
+                    <p class="font-red">{{p.price}}</p>
+                    @if(p.stock < 5){
+                        <p>Article bientot en rupture de stock</p>
+                    }
+                    @if(p.stock > 5){
+                        <p>Article disponible en quantité</p>
+                    }
+                                   @switch(p.stock){
+                        @case (0) {
+                            <p>Ce produit est indisponible pour le moment</p>
+                        }
+                        @case(10){
+                            <p>Il reste 10 exemplaires</p>
+                        }
+                    }
+                </div>
+            }
+        }
+
+    </ul>
+
+</div>
+
+<div>
+    <h4>Anciennes directives</h4>
+
+    <!-- For ancienne version -->
+    <div *ngFor="let item of productsSignal()">
+        <!-- If ancienne version -->
+        <p *ngIf="item.stock < 5"> {{item.name}}</p>
+
+    <ul>
+
+        <!-- Switch ancienne version -->
+        <li [ngSwitch]="item.id">
+        <p *ngSwitchCase="1">
+        
+        </p>
+        <p *ngSwitchCase="2">
+        
+        </p>
+        <p *ngSwitchDefault>
+        
+        </p>
+        </li>
+    </ul>
+</div>
+    </div>

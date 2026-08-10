@@ -15,6 +15,7 @@ import { NotFound } from './features/errors/not-found/not-found';
 import { Exo04CarteProduit } from './features/exercices/exo04-carte-produit/exo04-carte-produit';
 import { Home } from './features/home/home';
 import { Exo05Compteur } from './features/exercices/exo05-compteur/exo05-compteur';
+import { Demo07Directives } from './features/demonstrations/demo07-directives/demo07-directives';
 
 
 
@@ -55,6 +56,11 @@ export const routes: Routes = [
     title: 'Démonstration 06 - Pipes',
     path: 'demo06',
     component: Demo06Pipe
+  },
+      {
+    title: 'Démonstration 07 - Directives',
+    path: 'demo07',
+    component: Demo07Directives
   },
 
 
