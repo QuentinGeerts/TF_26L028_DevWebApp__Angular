@@ -1,0 +1,88 @@
+<div>
+    <p>Démonstration 06 - Pipes</p>
+</div>
+
+<div class="card">
+    <h2>Demonstration Pipes </h2>
+
+    <div class="mt-1">
+        <h4>Pipe Uppercase</h4>
+        <p>Sans Pipe : {{message}}</p>
+        <p>Avec Pipe : {{message | uppercase}}</p>
+    </div>
+
+    <div class="mt-1">
+        <h4>Pipe Uppercase avec signal</h4>
+
+        <p>{{messageSignal()}}</p>
+        <p>{{messageSignal() | uppercase}}</p>
+    </div>
+</div>
+
+<div class="card">
+    <h4>Pipe Lowercase</h4>
+    <p>Sans Pipe : {{message}}</p>
+    <p>Avec Pipe : {{message | lowercase}}</p>
+</div>
+
+<div class="card">
+    <h4>Pipe titleCase</h4>
+    <p>Sans Pipe : {{message}}</p>
+    <p>Avec Pipe : {{message | titlecase}}</p>
+</div>
+
+<div class="card">
+    <h4>Pipe Slice</h4>
+    <p>Sans Pipe : {{message}}</p>
+    <p>Avec Pipe : {{message | slice: 0:10}}</p>
+</div>
+
+<div class="card">
+    <h4>Pipe </h4>
+    <p>Sans Pipe : {{valeur}}</p>
+    <p>Sans Pipe : {{valeur | number }}</p>
+    <p>Sans Pipe : {{valeur | number : '0.0-2'}}</p>
+    <p>Sans Pipe : {{valeur | number : '0.0-1'}}</p>
+</div>
+
+<div class="card">
+    <h4>Pipe Currency</h4>
+    <p>Sans Pipe : {{valeur}}</p>
+    <p>Avec Pipe Sans paramètres : {{valeur | currency}}</p>
+    <p>Avec Pipe EUR : {{valeur | currency : 'EUR'}}</p>
+    <p>Avec Pipe USD : {{valeur | currency : 'USD'}}</p>
+
+    <p>Avec Pipe et code EUR : {{valeur | currency : 'EUR' :'code'}}</p>
+
+    <p>Sans Pipes symbol en dur : {{valeur}}€</p>
+
+</div>
+
+<div class="card">
+    <h4>Date Pipe</h4>
+    <p>{{date}}</p>
+
+    <p>{{date | date}}</p>
+    <p>{{dateSignal() | date}}</p>
+    
+    <p>{{date | date : 'short'}}</p>
+    
+    <p>{{date | date :'dd/MM/yyyy'}}</p>
+</div>
+
+<div class="card">
+    <h4>Json Pipe</h4>
+
+    <p>{{informationJson}}</p>
+    <p>{{informationJson | json}}</p>
+</div>
+
+<div class="card">
+    <h4>Création d'un pipe</h4>
+    <p>Commande : ng g pipe nom-du-pipe</p>
+
+    <input class="block w-full rounded-md border border-1 border-black bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" type="text"  [(ngModel)]="valeuremoji" >
+
+    <p>{{valeuremoji}}</p>
+    <p>{{valeuremoji | emojiPipe}}</p>
+</div>

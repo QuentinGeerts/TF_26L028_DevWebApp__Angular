@@ -201,3 +201,15 @@ img {
   display: block;
   margin-bottom: 1rem;
 }
+
+.card{
+  border : 1px solid black;
+  box-shadow : 2px 2px 5px rgba(0, 0, 0, 0.31);
+  margin : 1rem auto 0 auto;
+  padding : 1rem;
+  border-radius : 8px;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
