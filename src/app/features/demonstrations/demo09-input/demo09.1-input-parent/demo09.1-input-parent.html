@@ -1,0 +1,16 @@
+<div class="card">
+    <h4>Parent</h4>
+    <p>{{message}}</p>
+    <p>Le parent peut transmetre une information à l'enfant au travers d'un input </p>
+    
+    <div class="card">
+
+        <app-demo09-input-enfant 
+        [valeurRecu]="message"
+        [message2]="message"
+        [animal]="animalParent"
+        ></app-demo09-input-enfant>
+
+    </div>
+
+</div>

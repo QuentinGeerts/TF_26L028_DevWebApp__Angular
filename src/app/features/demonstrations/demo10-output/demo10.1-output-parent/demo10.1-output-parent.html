@@ -1,0 +1,19 @@
+<div class="card">
+    <h4>Parent</h4>
+
+
+    <div class="card">
+        <app-demo10-output-enfant
+        (emitValue)="addMessage($event)"
+        (emmeteurSignal)="addMessage($event)"
+        ></app-demo10-output-enfant>
+
+    </div>
+
+    <ul>
+        @for (m of messages(); track m) {
+            <p>{{m}}</p>
+        }
+    </ul>
+
+</div>
