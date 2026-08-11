@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Demo101OutputEnfant {
 
+  // ancienne syntaxe ----------------------------------
 @Output() emitValue = new EventEmitter<string>();
 
 valeurEnfant : string = '';
@@ -17,7 +18,7 @@ envoieValeur(){
   this.emitValue.emit(this.valeurEnfant)
 }
 
-// output nouvelle syntaxe (signal)
+// output nouvelle syntaxe (signal) --------------------
 
 emmeteurSignal = output<string>()
 

@@ -1,4 +1,4 @@
-<p>product-list </p>
+<h4>Product-list </h4>
 
 <div>
     <ol>
@@ -14,17 +14,20 @@
 </div>
 
 <div class="card">
-    <div class="card">
+    <div class="card form-product">
         <div>
             <label>Name</label>
+            <br>
             <input class="border" type="text" [(ngModel)]="name" >
         </div>
         <div>
             <label>Description</label>
+            <br>
             <input class="border" type="text" [(ngModel)]="description" >
         </div>
         <div>
             <label>Stock</label>
+            <br>
             <input class="border" type="number" [(ngModel)]="stock" >
             @if(errorMessage()){
                 <p>{{errorMessage()}}</p>
@@ -32,10 +35,12 @@
         </div>
         <div>
             <label>Price</label>
+            <br>
             <input class="border" type="number" [(ngModel)]="price" >
         </div>
         <div>
-            <label>Name</label>
+            <label>Promotion</label>
+            <br>
             <input class="border" type="checkbox" [(ngModel)]="promo" >
         </div>
         <button (click)="addProduct()">Ajouter</button>

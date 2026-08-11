@@ -22,6 +22,7 @@ import { Demo08SousRoutageHome } from './features/demonstrations/demo08-sous-rou
 import { Demo091InputParent } from './features/demonstrations/demo09-input/demo09.1-input-parent/demo09.1-input-parent';
 import { Demo101OutputParent } from './features/demonstrations/demo10-output/demo10.1-output-parent/demo10.1-output-parent';
 import { Demo11NgContentParent } from './features/demonstrations/demo11-ng-content/demo11-ng-content-parent/demo11-ng-content-parent';
+import { ParentExoList } from './features/exercices/exo07-input-output/parent-exo-list/parent-exo-list';
 
 
 
@@ -126,6 +127,11 @@ export const routes: Routes = [
     title : ' Exercice 06 Product List',
     path : 'exo06',
     component : ProductList
+  },
+    {
+    title : ' Exercice 07 Product List',
+    path : 'exo07',
+    component : ParentExoList
   },
   
   // Toujours à placer en tant que dernière route !!

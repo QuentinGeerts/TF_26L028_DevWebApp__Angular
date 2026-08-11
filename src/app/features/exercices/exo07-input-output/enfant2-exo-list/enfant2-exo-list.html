@@ -1,0 +1,5 @@
+
+@for (a of listArticle(); track a) {
+    <p>{{a.name}}</p>
+    <button (click)="removeArticle(a.id)">Remove</button>
+}
