@@ -16,7 +16,7 @@ import { Exo04CarteProduit } from './features/exercices/exo04-carte-produit/exo0
 import { Home } from './features/home/home';
 import { Exo05Compteur } from './features/exercices/exo05-compteur/exo05-compteur';
 import { Demo07Directives } from './features/demonstrations/demo07-directives/demo07-directives';
-import { ProductList } from './features/exercices/product-list/product-list';
+import { ProductList } from './features/exercices/exo06-product-list/product-list';
 import { Demo08SousRoutage } from './features/demonstrations/demo08-sous-routage/demo08-sous-routage';
 import { Demo08SousRoutageHome } from './features/demonstrations/demo08-sous-routage-home/demo08-sous-routage-home';
 import { Demo091InputParent } from './features/demonstrations/demo09-input/demo09.1-input-parent/demo09.1-input-parent';
