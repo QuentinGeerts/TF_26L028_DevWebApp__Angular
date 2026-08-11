@@ -1,8 +1,9 @@
-<div>
+<div class="card">
     <p>Démonstration 06 - Pipes</p>
     <p>Un pipe est une fonction de transformation appliquée à une valeur directement dans le template </p>
     <p>via la syntaxe :</p> 
     <pre ngNonBindable>{{valeur | nom_pipe : 'params'}}</pre>
+    <p class="mt-1"> Il est possible d'importer le pipe à utiliser uniquement ou d'utiliser l'import du CommonModule pour rendre les pipes existants disponibles en un seul import</p>
 </div>
 
 <div class="card">
@@ -11,14 +12,18 @@
     <div class="mt-1">
         <h4>Pipe Uppercase</h4>
         <p>Sans Pipe : {{message}}</p>
-        <p>Avec Pipe : {{message | uppercase}}</p>
-    </div>
 
+        <p class="mt-1">Avec Pipe : {{message | uppercase}}</p>
+        <pre ngNonBindable>{{message | uppercase}}</pre>
+    </div>
+    
     <div class="mt-1">
         <h4>Pipe Uppercase avec signal</h4>
         <p>Il est possible d'utiliser les signaux avec les pipes</p>
         <p>Signal sans pipe : {{messageSignal()}}</p>
-        <p>Signal avec pipe : {{messageSignal() | uppercase}}</p>
+
+        <p class="mt-1">Signal avec pipe : {{messageSignal() | uppercase}}</p>
+        <pre ngNonBindable>{{messageSignal() | uppercase}}</pre>
     </div>
 </div>
 
@@ -26,43 +31,60 @@
     <h4>Pipe Lowercase</h4>
     <p>Lowercase pour passer le texte en minuscules</p>
     <p>Sans Pipe : {{message}}</p>
-    <p>Avec Pipe : {{message | lowercase}}</p>
+
+    <p class="mt-1">Avec Pipe : {{message | lowercase}}</p>
+    <pre ngNonBindable>{{message | lowercase}}</pre>
 </div>
 
 <div class="card">
     <h4>Pipe titleCase</h4>
     <p>titlecase pour passer la première lettre du mot en majuscule</p>
     <p>Sans Pipe : {{message}}</p>
-    <p>Avec Pipe : {{message | titlecase}}</p>
+
+    <p class="mt-1">Avec Pipe : {{message | titlecase}}</p>
+    <pre ngNonBindable>{{message | titlecase}}</pre>
+
 </div>
 
 <div class="card">
     <h4>Pipe Slice</h4>
     <p>Slice pour récupérer une partie d'une chaîne de caractères</p>
     <p>Sans Pipe : {{message}}</p>
-    <p>Avec Pipe : {{message | slice: 0:10}}</p>
+
+    <p class="mt-1">Avec Pipe : {{message | slice: 0:10}}</p>
+    <pre ngNonBindable>{{message | slice: 0:10}}</pre>
 </div>
 
 <div class="card">
     <h4>Pipe Number</h4>
     <p>Le pipe number permet de formater un nombre et de récupérer plus ou moins de décimales</p>
     <p>Sans Pipe : {{valeur}}</p>
-    <p>Sans Pipe : {{valeur | number }}</p>
-    <p>Sans Pipe : {{valeur | number : '0.0-2'}}</p>
-    <p>Sans Pipe : {{valeur | number : '0.0-1'}}</p>
+    <p>Avec Pipe Number Sans paramètrre: {{valeur | number }}</p>
+
+    <p class="mt-1">Avec Pipe Number et paramètre '0.0-2': {{valeur | number : '0.0-2'}}</p>
+    <pre ngNonBindable>{{valeur | number : '0.0-2'}}</pre>
+
+    <p class="mt-1">Avec Pipe et paramètre '0.0-1': {{valeur | number : '0.0-1'}}</p>
+    <pre ngNonBindable>{{valeur | number : '0.0-1'}}</pre>
 </div>
 
 <div class="card">
     <h4>Pipe Currency</h4>
     <p>Currency permet d'afficher une valeur en devise avec le symbole approprié</p>
     <p>Sans Pipe : {{valeur}}</p>
-    <p>Avec Pipe Sans paramètres : {{valeur | currency}}</p>
-    <p>Avec Pipe EUR : {{valeur | currency : 'EUR'}}</p>
-    <p>Avec Pipe USD : {{valeur | currency : 'USD'}}</p>
 
-    <p>Avec Pipe et code EUR : {{valeur | currency : 'EUR' :'code'}}</p>
+    <p class="mt-1">Avec Pipe currency Sans paramètres : {{valeur | currency}}</p>
 
-    <p>Sans Pipes symbol en dur : {{valeur}}€</p>
+    <p class="mt-1">Avec Pipe EUR : {{valeur | currency : 'EUR'}}</p>
+    <pre ngNonBindable>{{valeur | currency : 'EUR'}}</pre>
+
+    <p class="mt-1">Avec Pipe USD : {{valeur | currency : 'USD'}}</p>
+    <pre ngNonBindable>{{valeur | currency : 'USD'}}</pre>
+    
+    <p class="mt-1">Avec Pipe et code EUR : {{valeur | currency : 'EUR' :'code'}}</p>
+    <pre ngNonBindable>{{valeur | currency : 'EUR' :'code'}}</pre>
+
+    <p class="mt-1">Sans Pipes symbol en dur : {{valeur}}€</p>
 
 </div>
 
@@ -71,12 +93,17 @@
     <p>DatePipe permet de formater une date dans toutes sortes de format</p>
     <p>date simple sans pipe : {{date}}</p>
 
-    <p>date avec pipe date sans paramètres : {{date | date}}</p>
-    <p>date signal avec pipe date sans paramètres :{{dateSignal() | date}}</p>
+    <p class="mt-1">date avec pipe date sans paramètres : {{date | date}}</p>
+    <pre ngNonBindable>{{date | date}}</pre>
     
-    <p>date avec pipe date et format court : {{date | date : 'short'}}</p>
+    <p class="mt-1">date signal avec pipe date sans paramètres :{{dateSignal() | date}}</p>
+    <pre ngNonBindable>{{dateSignal() | date}}</pre>
     
-    <p>date avec pipe date et format personnalisé : {{date | date :'dd/MM/yyyy'}}</p>
+    <p class="mt-1">date avec pipe date et format court : {{date | date : 'short'}}</p>
+    <pre ngNonBindable>{{date | date : 'short'}}</pre>
+    
+    <p class="mt-1">date avec pipe date et format personnalisé : {{date | date :'dd/MM/yyyy'}}</p>
+    <pre ngNonBindable>{{date | date :'dd/MM/yyyy'}}</pre>
 </div>
 
 <div class="card">
@@ -84,14 +111,16 @@
     <p>Le pipe json permet de formater un objet JSON dans le template</p>
     <p>Ce qui peut être utile pour déboguer ou afficher des données structurées</p>
     <p>{{informationJson}}</p>
-    <p>{{informationJson | json}}</p>
+
+    <p class="mt-1">{{informationJson | json}}</p>
+    <pre ngNonBindable>{{informationJson | json}}</pre>
 </div>
 
 <div class="card">
     <h4>Création d'un pipe</h4>
     <p>Commande : ng g pipe nom-du-pipe</p>
     <div class="card">
-        <input class="block w-full rounded-md border border-1 border-black bg-white/5 px-3 py-1.5 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" type="text"  [(ngModel)]="valeuremoji" >
+        <input class="block w-full rounded-md border-1 border-black bg-white/5 px-3 py-1.5 outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" type="text"  [(ngModel)]="valeuremoji" >
         
         <p>{{valeuremoji}}</p>
         <p>{{valeuremoji | emojiPipe}}</p>
