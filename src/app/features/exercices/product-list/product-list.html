@@ -12,3 +12,59 @@
         <li>Bonus : Ajouter plusieurs input pour l'ajout d'un produit</li>
     </ol>
 </div>
+
+<div class="card">
+    <div class="card">
+        <div>
+            <label>Name</label>
+            <input class="border" type="text" [(ngModel)]="name" >
+        </div>
+        <div>
+            <label>Description</label>
+            <input class="border" type="text" [(ngModel)]="description" >
+        </div>
+        <div>
+            <label>Stock</label>
+            <input class="border" type="number" [(ngModel)]="stock" >
+            @if(errorMessage()){
+                <p>{{errorMessage()}}</p>
+            }
+        </div>
+        <div>
+            <label>Price</label>
+            <input class="border" type="number" [(ngModel)]="price" >
+        </div>
+        <div>
+            <label>Name</label>
+            <input class="border" type="checkbox" [(ngModel)]="promo" >
+        </div>
+        <button (click)="addProduct()">Ajouter</button>
+
+    </div>
+    <ul>
+        @for (p of products(); track p) {
+            <li class="card">
+
+                @switch (p.stock) {
+                    @case (0) {
+                        <p>Le produit {{p.name}} est indisponible</p>
+                    }
+                    @default {
+                        <h4>{{p.name}}</h4>
+                        <p>{{p.description}}</p>
+                        <p>{{p.stock}}</p>
+                        @if(p.promo){
+                            <p class="promo">Promotion : {{p.price}}</p>
+                        }
+                        @else {
+                            <p>{{p.price}}</p>
+
+                        }
+                        <button (click)="addQuantity(p.id)">+</button>
+                        <button (click)="removeQuantity(p.id)" [disabled]="p.stock <= 0">-</button>
+                    }
+                }
+            </li>
+        }
+</ul>
+</div>
