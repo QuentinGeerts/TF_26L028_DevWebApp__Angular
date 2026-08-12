@@ -1,5 +1,12 @@
 
-@for (a of listArticle(); track a) {
-    <p>{{a.name}}</p>
-    <button (click)="removeArticle(a.id)">Remove</button>
-}
+    <ul class="card">
+        @for (a of listArticle(); track a) {
+            <li>
+                <h4>{{a.name}}</h4>
+                <p>{{a.description}}</p>
+                <p>{{a.price | currency : 'EUR'}}</p>
+                <p>{{a.stock}} pc</p>
+                <button (click)="removeArticle(a.id)">Remove</button>
+            </li>
+        }
+    </ul>

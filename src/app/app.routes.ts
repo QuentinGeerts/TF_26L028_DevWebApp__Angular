@@ -23,6 +23,9 @@ import { Demo091InputParent } from './features/demonstrations/demo09-input/demo0
 import { Demo101OutputParent } from './features/demonstrations/demo10-output/demo10.1-output-parent/demo10.1-output-parent';
 import { Demo11NgContentParent } from './features/demonstrations/demo11-ng-content/demo11-ng-content-parent/demo11-ng-content-parent';
 import { ParentExoList } from './features/exercices/exo07-input-output/parent-exo-list/parent-exo-list';
+import { RoutageService } from './features/demonstrations/demo12-service-crud/routage-service/routage-service';
+import { ListArticle } from './features/demonstrations/demo12-service-crud/list-article/list-article';
+import { AddArticle } from './features/demonstrations/demo12-service-crud/add-article/add-article';
 
 
 
@@ -94,6 +97,21 @@ export const routes: Routes = [
     title : 'Démonstration 11 - ng-content',
     path : 'demo11',
     component : Demo11NgContentParent
+  },
+  {
+    title : 'Démonstration 12 - service',
+    path : 'demo-service',
+    component : RoutageService,
+    children : [
+      {
+        path : '',
+        component : ListArticle
+      },
+      {
+        path : 'add-article',
+        component : AddArticle
+      }
+    ]
   },
 
 

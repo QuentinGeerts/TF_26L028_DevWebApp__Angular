@@ -11,27 +11,29 @@ import { Article } from '../article.model';
 })
 export class ParentExoList {
 
-  listArticle = signal<Article[]>([
+  articles = signal<Article[]>([
     {
       id : 1,
-      name : '1',
-      description : 'desc 1',
-      price : 1,
-      stock : 1
+      name : 'product 1',
+      description : 'description 1',
+      price : 10.99,
+      stock : 10
+      
     }
   ])
 
-  lastId = this.listArticle()[this.listArticle().length - 1]. id + 1
+  lastId = signal<number>(this.articles()[this.articles().length - 1].id + 1)
 
   addArticle(newArticle : Article){
-    newArticle.id = this.lastId
+    newArticle.id = this.lastId()
 
-    this.listArticle.update((v) => [...v,newArticle])
+    this.articles.update((a) => [...a , newArticle])
 
-    this.lastId += 1
+    this.lastId.update((v) => v += 1)
   }
 
   removeArticle(id : number){
-    this.listArticle.set(this.listArticle().filter((a) =>a.id !== id))
+    this.articles.update((list) => list.filter((article) => article.id !== id))
   }
+  
 }

@@ -1,0 +1,25 @@
+<h4>Add Article</h4>
+
+<div>
+    <div>
+        <label>Name</label>
+        <input type="text" [(ngModel)]="article.name">
+    </div>
+
+    <div>
+        <label>Description</label>
+        <input type="text" [(ngModel)]="article.description">
+    </div>
+
+        <div>
+        <label>Price</label>
+        <input type="number" [(ngModel)]="article.price">
+    </div>
+
+        <div>
+        <label>stock</label>
+        <input type="number" [(ngModel)]="article.stock">
+    </div>
+
+    <button (click)="addArticle()">Add</button>
+</div>

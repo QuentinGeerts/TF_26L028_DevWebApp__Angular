@@ -1,6 +1,22 @@
-<input type="text" [(ngModel)]="article.name">
-<input type="text" [(ngModel)]="article.description">
-<input type="number" [(ngModel)]="article.price">
-<input type="number" [(ngModel)]="article.stock">
+<h4>Ajout d'article</h4>
 
-<button (click)="addArticle()">Add</button>
+<div>
+    <div>
+        <label>Name</label>
+        <input class="border-1" type="text" [(ngModel)]="newArticle.name">
+    </div>
+        <div>
+        <label>Description</label>
+        <input class="border-1" type="text" [(ngModel)]="newArticle.description">
+    </div>
+    <div>
+        <label>Price</label>
+        <input class="border-1" type="Number" [(ngModel)]="newArticle.price">
+    </div>
+        <div>
+        <label>Stock</label>
+        <input class="border-1" type="Number" [(ngModel)]="newArticle.stock">
+    </div>
+
+    <button (click)="envoieArticleParent()">Ajout</button>
+</div>

@@ -1,19 +1,23 @@
 import { Component, input, output } from '@angular/core';
 import { Article } from '../article.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-enfant2-exo-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './enfant2-exo-list.html',
   styleUrl: './enfant2-exo-list.css',
 })
 export class Enfant2ExoList {
 
-  listArticle = input<Article[]>([])
+  // récupération de la liste
+  listArticle = input<Article[]>()
 
-  emetteurRemove = output<number>()
+  // relation avec le parent
+  emmeteurSuppression = output<number>()
 
+  // methode déclencher par l'enfant 
   removeArticle(id : number){
-    this.emetteurRemove.emit(id)
+    this.emmeteurSuppression.emit(id)
   }
 }

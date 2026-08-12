@@ -1,7 +1,9 @@
+
 <app-enfant1-exo-list
-(emitteurAdd)="addArticle($event)"
+(ajoutEmmeteur)="addArticle($event)"
 ></app-enfant1-exo-list>
+
 <app-enfant2-exo-list
-(emetteurRemove)="removeArticle($event)"
-[listArticle]="listArticle()"
+[listArticle]="articles()"
+(emmeteurSuppression)="removeArticle($event)"
 ></app-enfant2-exo-list>

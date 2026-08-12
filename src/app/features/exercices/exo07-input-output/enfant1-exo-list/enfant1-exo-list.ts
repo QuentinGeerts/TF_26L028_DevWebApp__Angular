@@ -2,6 +2,7 @@ import { Component, output } from '@angular/core';
 import { Article } from '../article.model';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
   selector: 'app-enfant1-exo-list',
   imports: [FormsModule],
@@ -10,9 +11,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class Enfant1ExoList {
 
-  emitteurAdd = output<Article>()
+  ajoutEmmeteur = output<Article>();
 
-  article : Article = {
+  newArticle : Article = {
     id : 0,
     name : '',
     description : '',
@@ -20,7 +21,8 @@ export class Enfant1ExoList {
     stock : 0
   }
 
-  addArticle(){
-    this.emitteurAdd.emit(this.article)
+  envoieArticleParent(){
+    this.ajoutEmmeteur.emit(this.newArticle)
   }
+  
 }
