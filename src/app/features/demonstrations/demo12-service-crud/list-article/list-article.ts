@@ -15,14 +15,18 @@ export class ListArticle implements OnInit{
   listArticles = signal<Article[]>([])
   
   // injection du service
-  articleService = inject(ArticleService)
+  private articleService = inject(ArticleService)
+
+  // constructor(private articleService : ArticleService){}
   
-  // appel du service à la construction du composant
   ngOnInit(): void {
+    // appel du service à la construction du composant
     this.listArticles = this.articleService.GetAllArticles()
   }
 
+  // methode pour l'action du composant
   deleteArticle(id : number){
+    // appel du service
     this.articleService.deleteArticle(id)
   }
 

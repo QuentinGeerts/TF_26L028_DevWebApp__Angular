@@ -26,6 +26,8 @@ import { ParentExoList } from './features/exercices/exo07-input-output/parent-ex
 import { RoutageService } from './features/demonstrations/demo12-service-crud/routage-service/routage-service';
 import { ListArticle } from './features/demonstrations/demo12-service-crud/list-article/list-article';
 import { AddArticle } from './features/demonstrations/demo12-service-crud/add-article/add-article';
+import { DetailsArticle } from './features/demonstrations/demo12-service-crud/details-article/details-article';
+import { UpdateArticle } from './features/demonstrations/demo12-service-crud/update-article/update-article';
 
 
 
@@ -110,6 +112,14 @@ export const routes: Routes = [
       {
         path : 'add-article',
         component : AddArticle
+      },
+      {
+        path : 'details-article',
+        component : DetailsArticle
+      },
+      {
+        path : 'update-article',
+        component : UpdateArticle
       }
     ]
   },

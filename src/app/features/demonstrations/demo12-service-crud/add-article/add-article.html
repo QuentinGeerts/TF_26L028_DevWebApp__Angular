@@ -3,22 +3,22 @@
 <div>
     <div>
         <label>Name</label>
-        <input type="text" [(ngModel)]="article.name">
+        <input class="border-1" type="text" [(ngModel)]="article.name">
     </div>
 
     <div>
         <label>Description</label>
-        <input type="text" [(ngModel)]="article.description">
+        <input class="border-1" type="text" [(ngModel)]="article.description">
     </div>
 
         <div>
         <label>Price</label>
-        <input type="number" [(ngModel)]="article.price">
+        <input class="border-1" type="number" [(ngModel)]="article.price">
     </div>
 
         <div>
         <label>stock</label>
-        <input type="number" [(ngModel)]="article.stock">
+        <input class="border-1" type="number" [(ngModel)]="article.stock">
     </div>
 
     <button (click)="addArticle()">Add</button>

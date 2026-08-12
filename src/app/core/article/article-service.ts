@@ -1,9 +1,13 @@
-import { Service, signal } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { Article } from '../../features/exercices/exo07-input-output/article.model';
+import { AuthService } from '../auth/auth-service';
 
 @Service()
 export class ArticleService {
 
+// le service peut faire requettes vers le back-end
+
+// simulation d'une Db
     listeArticles = signal<Article[]>([
         {
             id : 1,
@@ -14,10 +18,13 @@ export class ArticleService {
             
         }
     ])
-
     lastId = signal<number>(this.listeArticles()[this.listeArticles().length - 1].id + 1)
 
+
+    authService = inject(AuthService)
+
     addArticle(newArticle :Article){
+        
         newArticle.id = this.lastId()
         this.listeArticles.update((list) => [...list , newArticle])
 
