@@ -28,6 +28,8 @@ import { ListArticle } from './features/demonstrations/demo12-service-crud/list-
 import { AddArticle } from './features/demonstrations/demo12-service-crud/add-article/add-article';
 import { DetailsArticle } from './features/demonstrations/demo12-service-crud/details-article/details-article';
 import { UpdateArticle } from './features/demonstrations/demo12-service-crud/update-article/update-article';
+import { Demo14FormControl } from './features/demonstrations/demo14-formulaires/demo14-form-control/demo14-form-control';
+import { Demo14FormGroup } from './features/demonstrations/demo14-formulaires/demo14-form-group/demo14-form-group';
 
 
 
@@ -122,6 +124,16 @@ export const routes: Routes = [
         component : UpdateArticle
       }
     ]
+  },
+  {
+    title : 'Demonstration 14 - Form Control',
+    path : 'demo14',
+    component : Demo14FormControl
+  },
+    {
+    title : 'Demonstration 14 - Form Group',
+    path : 'demo14-form-group',
+    component : Demo14FormGroup
   },
 
 

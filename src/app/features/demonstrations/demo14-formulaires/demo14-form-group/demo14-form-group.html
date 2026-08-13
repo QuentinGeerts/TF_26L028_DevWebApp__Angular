@@ -1,0 +1,47 @@
+<div>
+    <h4>Ajout Utilisateur</h4>
+
+    <form [formGroup]="formUser" (ngSubmit)="addUser()">
+
+        <div>
+            <label>Name</label>
+            <br>
+            <input class="border" type="text" formControlName="name">
+        </div>
+        <div>
+            <label>Email</label>
+            <br>
+            <input class="border" type="text" formControlName="email">
+        </div>
+        <div>
+            <label>Pasword</label>
+            <br>
+            <input class="border" type="text" formControlName="password">
+        </div>
+        <div>
+            <label>City</label>
+            <br>
+            <input class="border" type="text" formControlName="city">
+        </div>
+        <div>
+            <label>Image</label>
+            <br>
+            <input class="border" type="text" formControlName="image">
+        </div>
+
+        <button type="submit">Add</button>
+    </form>
+</div>
+
+<ul>
+    @for (u of listUser(); track u) {
+        <li>
+            <h5>{{u.name}}</h5>
+            <p>{{u.email}}</p>
+            <p>{{u.password}}</p>
+            <p>{{u.city}}</p>
+            <img [src]="u.imageUrl" [alt]="u.name">
+        </li>
+    }
+</ul>
+

@@ -1,0 +1,24 @@
+<h4>Form Control</h4>
+
+<div class="card">
+    <h5>Binding two-way</h5>
+    <input type="text" [(ngModel)]="valueTwoWay">
+    <p>Value Two-way : {{valueTwoWay}}</p>
+
+</div>
+
+<div class="card">
+<h5>FormControl</h5>
+
+<p>Necessite D'importer le ReactiveFormModule</p>
+<p>Une balise form qui permet de déclencher une methode </p>
+<p>un input qui sera lié grace au formcontrol</p>
+
+<form (ngSubmit)="soumissionForm()">
+    <label>valeur form-control</label>
+    <input class="border-1" type="text" placeholder="entrez une valeur" [formControl]="valueFormControl">
+
+    <button type="submit">soumettre</button>
+</form>
+
+</div>
