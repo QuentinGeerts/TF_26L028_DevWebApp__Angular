@@ -1,0 +1,87 @@
+<h1>Storage</h1>
+
+<div class="card">
+    <h4>LocalStorage & SessionStorage</h4>
+    <p>Le navigateur offre deux espaces de stockage <strong>clé / valeur</strong> permettant
+    de conserver des données côté client, sans base de données ni serveur : le
+    <code>localStorage</code> et le <code>sessionStorage</code>.</p>
+    <p>Ce sont des API du navigateur (Web Storage API), pas des fonctionnalités Angular —
+    elles s'utilisent donc de la même façon dans n'importe quelle application web.</p>
+</div>
+
+<div class="card">
+    <h4>Quelle différence entre les deux ?</h4>
+    <p>Les deux ont exactement la même API. Seule leur <strong>durée de vie</strong> change :</p>
+    <ul>
+        <li><code>localStorage</code> : les données <strong>persistent</strong> — fermeture
+        du navigateur, redémarrage du PC... elles restent jusqu'à suppression explicite
+        (par le code ou par l'utilisateur qui vide ses données de navigation) ;</li>
+        <li><code>sessionStorage</code> : les données vivent le temps de
+        l'<strong>onglet</strong> — fermer l'onglet les efface, et chaque onglet possède
+        son propre stockage, même sur le même site.</li>
+    </ul>
+    <p>Cas d'usage typiques : préférences utilisateur, thème, panier, brouillon de
+    formulaire pour <code>localStorage</code> ; état temporaire d'un parcours
+    (étape d'un wizard, filtre en cours) pour <code>sessionStorage</code>.</p>
+</div>
+
+<div class="card">
+    <h4>L'API</h4>
+    <p>Quatre méthodes principales, identiques pour les deux :</p>
+    <pre><code>// Écrire (clé, valeur)
+localStorage.setItem('theme', 'dark');
+
+// Lire — retourne null si la clé n'existe pas
+const theme = localStorage.getItem('theme');
+
+// Supprimer une clé
+localStorage.removeItem('theme');
+
+// Tout vider
+localStorage.clear();</code></pre>
+    <p>⚠️ Le storage ne stocke que des <strong>chaînes de caractères</strong>. Pour un
+    objet ou un tableau, il faut sérialiser en JSON à l'écriture et désérialiser à la
+    lecture :</p>
+    <pre><code>// Écriture d'un objet
+const user = &#123; name: 'Zac', theme: 'dark' &#125;;
+localStorage.setItem('user', JSON.stringify(user));
+
+// Lecture — attention au null si la clé n'existe pas
+const raw = localStorage.getItem('user');
+const savedUser = raw ? JSON.parse(raw) : null;</code></pre>
+</div>
+
+<div class="card">
+    <h4>Bonnes pratiques dans Angular</h4>
+    <p>Plutôt que d'appeler <code>localStorage</code> directement dans les composants, on
+    centralise les accès dans un <strong>service</strong> : une seule source de vérité,
+    la sérialisation JSON gérée à un seul endroit, et des composants qui restent testables.</p>
+    <p>Combiné aux signaux, le pattern classique est : un signal comme état réactif, et un
+    <code>effect</code> qui sauvegarde automatiquement à chaque changement :</p>
+    <pre><code>@Injectable(&#123; providedIn: 'root' &#125;)
+export class ThemeService &#123;
+    theme = signal&lt;string&gt;(localStorage.getItem('theme') ?? 'light');
+
+    constructor() &#123;
+        // À chaque changement du signal, on persiste
+        effect(() =&gt; &#123;
+            localStorage.setItem('theme', this.theme());
+        &#125;);
+    &#125;
+&#125;</code></pre>
+    <p>Le composant ne parle qu'au signal — la persistance est invisible pour lui.</p>
+</div>
+
+<div class="card">
+    <h4>Limites et sécurité</h4>
+    <ul>
+        <li>Capacité limitée à environ <strong>5 Mo</strong> par origine (domaine) ;</li>
+        <li>Stockage <strong>synchrone</strong> : à réserver aux petites données
+        (pour du volume, il existe IndexedDB) ;</li>
+        <li>Le stockage est isolé <strong>par origine</strong> : un autre site ne peut pas
+        lire vos données ;</li>
+        <li>Mais tout script s'exécutant sur <em>votre</em> page y a accès (risque XSS) :
+        on n'y stocke <strong>jamais de données sensibles</strong> — mots de passe,
+        données personnelles critiques.</li>
+    </ul>
+</div>

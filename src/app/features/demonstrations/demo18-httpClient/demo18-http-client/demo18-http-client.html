@@ -22,7 +22,8 @@
     <code>put</code>, <code>delete</code>...) retourne un
     <strong><code>Observable</code></strong> : un flux de données auquel on pourra
     s'abonner. Tant que personne n'est abonné, la requête n'est pas envoyée.</p>
-    <pre><code>export class HttpService &#123;
+    <p>On peut consomer plusieurs services dans un composant , ou même consomer un service dans un autre , il est toutefois préférable de séparer les responsabilités au maximum.</p>
+    <pre><code>export class DogService &#123;
     private http = inject(HttpClient);
 
     getDog(): Observable&lt;DogResponse&gt; &#123;
@@ -45,7 +46,7 @@
         <code>complete</code> sont mutuellement exclusifs).</li>
     </ul>
     <pre><code>getDog() &#123;
-    this.httpService.getDog().subscribe(&#123;
+    this.DogService.getDog().subscribe(&#123;
         next: (res) =&gt; &#123;
             this.imageUrl.set(res.message);
         &#125;,

@@ -36,6 +36,10 @@ import { Demo13Routage } from './features/demonstrations/demo13-routage/demo13-r
 import { Demo14FormArray } from './features/demonstrations/demo14-formulaires/demo14-form-array/demo14-form-array';
 import { Demo18HttpClient } from './features/demonstrations/demo18-httpClient/demo18-http-client/demo18-http-client';
 import { Demo17Observables } from './features/demonstrations/demo17-observables/demo17-observables/demo17-observables';
+import { Demo19Storage } from './features/demonstrations/demo19-storage/demo19-storage/demo19-storage';
+import { Demo20Resolver } from './features/demonstrations/demo20-resolver/demo20-resolver/demo20-resolver';
+import { Demo21Interceptor } from './features/demonstrations/demo21-interceptor/demo21-interceptor/demo21-interceptor';
+import { Demo22Build } from './features/demonstrations/demo22-build/demo22-build/demo22-build';
 
 
 
@@ -160,6 +164,26 @@ export const routes: Routes = [
     title : 'Demonstration 18 - HttpClient',
     path : 'demo18-http',
     component : Demo18HttpClient
+  },
+        {
+    title : 'Demonstration 19 - Storage',
+    path : 'demo19-storage',
+    component : Demo19Storage
+  },
+        {
+    title : 'Demonstration 20 - resolver',
+    path : 'demo20-resolver',
+    component : Demo20Resolver
+  },
+          {
+    title : 'Demonstration 21 - interceptor',
+    path : 'demo21-interceptor',
+    component : Demo21Interceptor
+  },
+          {
+    title : 'Demonstration 22 - build',
+    path : 'demo22-build',
+    component : Demo22Build
   },
 
 
