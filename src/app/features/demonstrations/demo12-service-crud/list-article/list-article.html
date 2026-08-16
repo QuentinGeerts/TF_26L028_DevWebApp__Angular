@@ -1,10 +1,14 @@
 <h4>List Article</h4>
 
-@for (a of listArticles(); track a) {
-    <h4>{{a.name}}</h4>
-    <p>{{a.description}}</p>
-    <p>{{a.price | currency : 'EUR'}}</p>
-    <p>{{a.stock}} pc</p>
-    <button>Details</button>
-    <button (click)="deleteArticle(a.id)">Delete</button>
+<ul>
+    @for (a of listArticles(); track a) {
+        <li class="card">
+            <h4>{{a.name}}</h4>
+            <p>{{a.description}}</p>
+            <p>{{a.price | currency : 'EUR'}}</p>
+            <p>{{a.stock}} pc</p>
+            <button (click)="navigateToDetails(a.id)">Details</button>
+            <button (click)="deleteArticle(a.id)">Delete</button>
+        </li>
 }
+</ul>

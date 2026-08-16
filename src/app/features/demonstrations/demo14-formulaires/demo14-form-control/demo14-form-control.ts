@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -17,12 +17,14 @@ valueTwoWay : string = 'valeur Two-way'
 
 
 // formulaire : FormControl
-
 valueFormControl = new FormControl('',[])
+
+valeurAffichage = signal<string>('')
 
 soumissionForm(){
   console.log(this.valueFormControl);
   console.log(this.valueFormControl.value);
+  this.valeurAffichage.set(this.valueFormControl.value || 'erreur')
 
 }
 }

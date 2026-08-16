@@ -4,6 +4,15 @@
 </div>
 
 <ul class="menu">
+<p>{{isLogged()}}</p>
+  <li>
+    @if(isLogged()){
+      <button (click)="logout()">logout</button>
+    }
+    @else {
+      <button (click)="login()">login</button>
+    }
+  </li>
   <li>
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
   </li>
@@ -48,10 +57,22 @@
             <a routerLink="/demo-service" routerLinkActive="active">12. demo-service</a>
           </li>
           <li>
+            <a routerLink="/demo13" routerLinkActive="active">13. Router & ActivatedRoute</a>
+          </li>
+          <li>
             <a routerLink="/demo14" routerLinkActive="active">14. Form-control</a>
           </li>
           <li>
             <a routerLink="/demo14-form-group" routerLinkActive="active">15. Form-group</a>
+          </li>
+          <li>
+            <a routerLink="/demo14-form-array" routerLinkActive="active">16. Form-array</a>
+          </li>
+          <li>
+            <a routerLink="/demo17-observable" routerLinkActive="active">17. Observables</a>
+          </li>
+          <li>
+            <a routerLink="/demo18-http" routerLinkActive="active">18. HttpClient</a>
           </li>
         </ul>
       </li>

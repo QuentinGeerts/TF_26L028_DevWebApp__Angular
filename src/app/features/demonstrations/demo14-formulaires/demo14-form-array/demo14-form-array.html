@@ -1,0 +1,115 @@
+<h1>Form-Array</h1>
+
+<div class="card">
+    <h5>Champs dynamiques avec FormArray</h5>
+    <p>Un <code>FormGroup</code> convient quand le nombre de champs est fixe et connu à
+        l'avance. Mais comment gérer une liste de champs dont l'utilisateur décide de la
+        taille — plusieurs numéros de téléphone, plusieurs adresses, plusieurs pouvoirs
+        pour un héros ?</p>
+    <p>C'est le rôle du <strong><code>FormArray</code></strong> : un tableau de contrôles
+        dans lequel on peut ajouter et supprimer des <code>FormControl</code> à la volée.
+        Sa valeur est un tableau (<code>string[]</code> ici), et comme pour le
+        <code>FormGroup</code>, il n'est valide que si tous ses contrôles le sont.
+    </p>
+    <div class="card">
+        <p>Côté TypeScript, le <code>FormArray</code> se déclare comme un champ du groupe,
+            ici initialisé avec un premier contrôle vide :</p>
+        <pre><code>myForm = this.fb.group(&#123;
+name: ['', []],
+power: this.fb.array([this.fb.control('')])
+&#125;);</code></pre>
+
+<div class="card">
+
+    <p>Un getter permet d'y accéder facilement (avec le bon typage) depuis le template
+        et les méthodes :</p>
+        <pre><code>get power() &#123;
+return this.myForm.get('power') as FormArray;
+&#125;</code></pre>
+</div>
+<div class="card">
+
+    <p>L'ajout et la suppression manipulent le tableau de contrôles —
+        <code>removeAt(index)</code> supprime le champ à n'importe quelle position, pas
+        seulement le dernier :
+    </p>
+    <pre><code>addPower() &#123;
+this.power.push(this.fb.control(''));
+&#125;
+
+removePower(index: number) &#123;
+this.power.removeAt(index);
+&#125;</code></pre>
+    </div>
+</div>
+
+    <div class="card">
+
+        <p>Côté HTML, trois éléments entrent en jeu :</p>
+        <ul class="card">
+            <li><code>formArrayName="power"</code> sur un conteneur délimite la zone du
+                <code>FormArray</code>;
+            </li>
+            <li>un <code>&#64;for</code> parcourt <code>power.controls</code> pour générer
+                un input par contrôle — avec <code>track control</code> (par identité, pas par
+                index : voir la remarque plus bas) ;</li>
+            <li><code>[formControlName]="$index"</code> relie chaque input à sa position
+                dans le tableau (entre crochets cette fois : l'index est une expression, pas
+                un nom fixe).</li>
+        </ul>
+
+        <div>
+
+        <pre class="card"><code>&lt;div formArrayName="power"&gt;
+&#64;for (control of power.controls; track control) &#123;
+&lt;input [formControlName]="$index"&gt;
+&lt;button type="button" (click)="removePower($index)"&gt;Supprimer&lt;/button&gt;
+&#125;
+&lt;/div&gt;</code></pre>
+
+
+    <p><strong><code>track</code></strong> : avec <code>track $index</code>,
+        supprimer un champ au milieu donne l'impression que c'est toujours le dernier qui
+        disparaît — Angular identifie les éléments par leur position et recycle mal les
+        nœuds. Avec <code>track control</code>, chaque champ est identifié par son objet
+        <code>FormControl</code>, et la suppression retire visuellement le bon élément.
+    </p>
+
+    <p>À la soumission, <code>myForm.value</code> retourne
+        <code>&#123; name: string, power: string[] &#125;</code> — le tableau est déjà
+        construit, prêt à l'emploi.
+    </p>
+
+    <div class="card">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+            <div>
+                <label>Name</label>
+                <input type="text" formControlName="name" class="border">
+            </div>
+
+            <div formArrayName="power">
+                <button type="button" (click)="addPower()">Ajouter un pouvoir</button>
+
+                @for (control of power.controls; track control) {
+                <div class="card">
+                    <label>Pouvoir {{ $index + 1 }} :</label>
+                    <input [formControlName]="$index" placeholder="Entrez un pouvoir" class="border">
+                    <button type="button" (click)="removePower($index)">Supprimer</button>
+                </div>
+                }
+            </div>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+
+    <ul class="card">
+        @for (h of heroes(); track h.name) {
+        <li class="card">
+            <h5>{{h.name}}</h5>
+            @for (p of h.power; track $index) {
+            <span class="badge">| {{p}} </span>
+            }
+        </li>
+        }
+    </ul>
+</div>

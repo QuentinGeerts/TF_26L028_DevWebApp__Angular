@@ -1,5 +1,52 @@
-<ul class="card">
-    <li><a routerLink="/demo-service">ListService</a></li>
-    <li><a routerLink="/demo-service/add-article">add Article</a></li>
-</ul>
-<router-outlet></router-outlet>
+<h4>Services</h4>
+<div class="card">
+    <p>Jusqu'ici la logique est implémentée dans les composants , et un composant à besoin d'être "enfant" d'un autre
+        pour partager des données ou des fonctionnalités.</p>
+    <p>Les services permettent de centraliser la logique et de la rendre accessible depuis un seul fichier vers
+        plusieurs composants.</p>
+    <p>Ce qui facilite la maintenance et la réutilisation du code.</p>
+    <p>La plupart du temps les services servent à effectuer des requêtes HTTP vers un serveur mais peuvent aussi être
+        utilisés pour d'autres tâches (gestion d'état, communication inter-composants, etc.).</p>
+    <p>Pour créer un service, on utilise la commande</p>
+    <code>ng generate service nom-du-service</code> ou <code>ng g s nom-du-service</code>.
+</div>
+<div class="card">
+    <p>On reconnait un service par son décorateur : <code>@Injectable()</code>.</p>
+    <p>Qui peut avoir plusieurs propriétés ce qui modifie sa durée de vie.</p>
+    <p>Voici les deux options les plus courantes:</p>
+    <p><code>providedIn: 'root' :</code>Le service est fourni au niveau racine de l'application sa durée de vie est la même que celle de l'application.</p>
+    <p><code>providedIn: '' :</code>Le service est crée lors de l'initialisation d'un composant sa durée de vie est limitée à celle du composant.</p>
+    <p>Si le composant utilise le composant pour définir sa durée de vie il faudra ajouter un paramètre dans le décorateur du composant</p>
+    <code ngNonBindable><pre>@Component(&#123;
+selector: 'app-name-service',
+imports: [],
+templateUrl: './name.html',
+styleUrl: './name.css',
+providers : [MonService] <- ici
+&#125;)
+    </pre></code>
+</div>
+<div class="card">
+    <p>Pour utiliser un service dans un composant, il faut l'injecter dans le composant.</p>
+    <p>On peut ensuite utiliser les méthodes et les propriétés du service dans le composant.</p>
+    <p>Pour l'injection on retrouve deux syntaxes:</p>
+    <p><code>Ancienne syntaxe: constructor(service: NomDuService) &#123;&#125;</code></p>
+    <p><code>Nouvelle syntaxe: service = inject(NomDuService)  **importé de @angular/core**</code></p>
+    <p>Dès lors il sera possible d'accéder aux méthodes et propriétés du service à travers la variable service.</p>
+    <pre><code>service.maMethode()</code></pre>
+    <pre><code>service.maPropriété</code></pre>
+    <pre><code>service.monSignal (copie le signal vers un autre)</code></pre>
+    <pre><code>service.monSignal() (recupère la valeur du signal à un moment donné)</code></pre>
+</div>
+<div class="card">
+    <p>Dans cet exemple, nous avons un service pour gérer les articles.</p>
+    <p>Plusieurs composant font appel à ce service pour effectuer des opérations sur les articles.</p>
+</div>
+
+<div class="card">
+    <ul class="card">
+        <li><a routerLink="/demo-service">ListService</a></li>
+        <li><a routerLink="/demo-service/add-article">add Article</a></li>
+    </ul>
+    <router-outlet></router-outlet>
+</div>

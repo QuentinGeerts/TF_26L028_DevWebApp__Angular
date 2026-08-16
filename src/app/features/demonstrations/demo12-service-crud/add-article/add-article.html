@@ -1,25 +1,30 @@
 <h4>Add Article</h4>
 
-<div>
-    <div>
+<div class="card w-75 m-auto">
+    <div class="text-center">
         <label>Name</label>
-        <input class="border-1" type="text" [(ngModel)]="article.name">
+        <br>
+        <input class="border" type="text" [(ngModel)]="article.name">
     </div>
-
-    <div>
+    
+    <div class="text-center">
         <label>Description</label>
-        <input class="border-1" type="text" [(ngModel)]="article.description">
+        <br>
+        <input class="border" type="text" [(ngModel)]="article.description">
     </div>
-
-        <div>
+    
+    <div class="text-center">
         <label>Price</label>
-        <input class="border-1" type="number" [(ngModel)]="article.price">
+        <br>
+        <input class="border" type="number" [(ngModel)]="article.price">
     </div>
-
-        <div>
+    <div class="text-center">
         <label>stock</label>
-        <input class="border-1" type="number" [(ngModel)]="article.stock">
+        <br>
+        <input class="border" type="number" [(ngModel)]="article.stock">
     </div>
 
-    <button (click)="addArticle()">Add</button>
+    <div class="text-center">
+        <button (click)="addArticle()">Add</button>
+    </div>
 </div>

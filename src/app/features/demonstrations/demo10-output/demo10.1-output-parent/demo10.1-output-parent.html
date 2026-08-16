@@ -1,19 +1,53 @@
+<h1>Communication Enfant / Parent avec le Output</h1>
 <div class="card">
-    <h4>Parent</h4>
+<p>Dans ce cas, l'enfant émet une valeur via le décorateur &#64;Output et le parent la reçoit via un gestionnaire d'événement.</p>
+<p>La logique fonctionnelle est implémentée dans le composant parent.</p>
+<p>Et le composant enfant va implémenter un "output" qui permet d'émettre des événements vers le parent.</p>
+<p>Le output est donc un émetteur d'événements.</p>
+<p>Dans cette exemple le parent contient une liste de messages et une méthode pour les ajouter.</p>
+<p>On retrouve également deux syntaxes pour déclarer les outputs :</p>    
+</div>
 
+<div class="card">
+    <p>Ancienne syntaxe :</p>
+<pre><code>valeurEnfant : string = '';
+&#64;Output() emitValue = new EventEmitter&lt;string&gt;()
+envoieValeur() &#123;
+  this.emitValue.emit(this.valeurEnfant)
+&#125;</code></pre>
+</div>
 
-    <div class="card">
-        <app-demo10-output-enfant
+<div class="card">
+    <p>Nouvelle syntaxe :</p>
+<pre><code>valeurEnfant : string = '';
+emmeteurSignal = output< string>()
+envoieValeur() &#123;
+  this.emitValue.emit(this.valeurEnfant)
+&#125;</code></pre>
+</div>
+<div class="card">
+    <p>Dans les deux cas l'information sera passée au travers de la balise enfant appelée dans le composant parent.</p>
+    <p>Ici les parenthèses représentent les événements émis par l'enfant :</p>
+    <pre><code>< app-demo10-output-enfant
+        (emitValue)="addMessage($event)"
+        (emmeteurSignal)="addMessage($event)"
+        >< /app-demo10-output-enfant></code></pre>
+</div>
+
+<div class="card">
+    <app-demo10-output-enfant
         (emitValue)="addMessage($event)"
         (emmeteurSignal)="addMessage($event)"
         ></app-demo10-output-enfant>
+</div>
 
-    </div>
-
+<div class="card">
+    <p>Parent:</p>
     <ul>
+        <h4>Parent</h4>
         @for (m of messages(); track m) {
             <p>{{m}}</p>
         }
     </ul>
-
 </div>
+

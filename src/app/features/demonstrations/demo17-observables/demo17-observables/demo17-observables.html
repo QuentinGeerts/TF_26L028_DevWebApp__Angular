@@ -1,0 +1,99 @@
+<div>
+
+    <h1>Observables</h1>
+
+    <div class="card">
+        <h3>Les observables</h3>
+        <p>Un observable (fourni par la librairie <strong>RxJS</strong>) est un objet qui émet des valeurs au fil du
+            temps.</p>
+        <p>Il permet de gérer des flux de données asynchrones : requêtes HTTP, événements utilisateur, timers…</p>
+        <p>Contrairement à une promesse qui ne renvoie qu'une seule valeur, un observable peut émettre plusieurs valeurs
+            successives.</p>
+    </div>
+
+    <div class="card">
+        <h3>La souscription</h3>
+        <p>Un observable est « paresseux » : il ne s'exécute que lorsqu'on s'y abonne avec la méthode
+            <code>subscribe()</code>.</p>
+        <p>La souscription reçoit trois types de notifications :</p>
+        <ul>
+            <li><code>next</code> : une nouvelle valeur est émise ;</li>
+            <li><code>error</code> : une erreur s'est produite, le flux s'arrête ;</li>
+            <li><code>complete</code> : le flux est terminé, plus aucune valeur ne sera émise.</li>
+        </ul>
+        <p>Il est important de se <strong>désabonner</strong> avec <code>unsubscribe()</code> (au plus tard
+            dans <code>ngOnDestroy</code>) pour éviter les fuites de mémoire.</p>
+    </div>
+
+    <h2>Démonstration</h2>
+
+    <div class="card">
+        <h3>Compteur</h3>
+        <p>Un observable émet une valeur par seconde tant qu'on est abonné. « Arrêter » se désabonne
+            du flux.</p>
+        <p><strong>Valeur reçue :</strong> {{ counterValue() }}</p>
+        <div>
+            <button (click)="startCounter()">Démarrer</button>
+            <button (click)="stopCounter()">Arrêter</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Flux de produits avec filtre</h3>
+        <p>L'observable émet des produits ; l'opérateur <code>filter</code> ne laisse passer que ceux
+            dont le prix est supérieur à 0.</p>
+        <div>
+            <button (click)="getShoppingItem()">Démarrer</button>
+            <button (click)="stopShoppingItem()">Arrêter</button>
+        </div>
+        <div>
+            @for (product of products(); track product.name) {
+                <div>
+                    <p><strong>{{ product.name }}</strong></p>
+                    <p>{{ product.price }} €</p>
+                    <img [src]="product.img" [alt]="product.name" width="100">
+                </div>
+            }
+        </div>
+    </div>
+
+    <h2>Exemples</h2>
+
+    <div class="card">
+        <h3>Souscrire à un observable</h3>
+        <pre><code>counterValue = signal&lt;number | null&gt;(null);
+
+startCounter() &#123;
+  this.counterSubscription = this.observableService.getCounter().subscribe(&#123;
+    next: (value) => this.counterValue.set(value),
+    complete: () => console.log('Observable terminé'),
+  &#125;);
+&#125;</code></pre>
+    </div>
+
+    <div class="card">
+        <h3>Se désabonner</h3>
+        <pre><code>stopCounter() &#123;
+  this.counterSubscription?.unsubscribe();
+&#125;
+
+// À la destruction du composant, on nettoie l'abonnement
+ngOnDestroy() &#123;
+  this.stopCounter();
+&#125;</code></pre>
+    </div>
+
+    <div class="card">
+        <h3>Les opérateurs (pipe)</h3>
+        <p>Les opérateurs RxJS (<code>filter</code>, <code>map</code>…) transforment le flux
+            avant la souscription.</p>
+        <pre><code>this.observableService.getShoppingItem()
+  .pipe(
+    filter(item => item.price > 0)
+  )
+  .subscribe(&#123;
+    next: (item) => this.products.update(list => [...list, item]),
+  &#125;);</code></pre>
+    </div>
+
+</div>

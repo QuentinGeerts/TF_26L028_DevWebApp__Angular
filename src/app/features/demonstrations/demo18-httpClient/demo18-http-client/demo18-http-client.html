@@ -1,0 +1,83 @@
+<h4>Demo17 : HttpClient</h4>
+
+<div class="card">
+    <h5>1. Configuration</h5>
+    <p>Pour exécuter des requêtes HTTP, Angular fournit le service
+    <strong><code>HttpClient</code></strong>. Il doit d'abord être enregistré dans les
+    providers de l'application, dans le fichier <code>app.config.ts</code> :</p>
+    <pre><code>export const appConfig: ApplicationConfig = &#123;
+    providers: [
+        provideBrowserGlobalErrorListeners(),
+        provideRouter(routes),
+        // obligatoire pour faire des requêtes HTTP
+        provideHttpClient()
+    ]
+&#125;;</code></pre>
+</div>
+
+<div class="card">
+    <h5>2. Le service : émettre la requête</h5>
+    <p>Les appels HTTP se placent dans un service dédié, dans lequel on injecte
+    <code>HttpClient</code>. Chaque méthode (<code>get</code>, <code>post</code>,
+    <code>put</code>, <code>delete</code>...) retourne un
+    <strong><code>Observable</code></strong> : un flux de données auquel on pourra
+    s'abonner. Tant que personne n'est abonné, la requête n'est pas envoyée.</p>
+    <pre><code>export class HttpService &#123;
+    private http = inject(HttpClient);
+
+    getDog(): Observable&lt;DogResponse&gt; &#123;
+        return this.http.get&lt;DogResponse&gt;('https://dog.ceo/api/breeds/image/random');
+    &#125;
+&#125;</code></pre>
+</div>
+
+<div class="card">
+    <h5>3. Le composant : consommer la réponse</h5>
+    <p>Pour consommer le contenu de l'Observable, il faut s'y abonner avec
+    <strong><code>subscribe()</code></strong>. On lui passe un objet « observer »
+    avec trois callbacks possibles :</p>
+    <ul>
+        <li><code>next</code> : la requête a réussi — on reçoit les données ;</li>
+        <li><code>error</code> : la requête a échoué — on reçoit l'erreur ;</li>
+        <li><code>complete</code> : le flux est terminé <em>sans erreur</em> —
+        aucune donnée n'est transmise. Attention : <code>complete</code> n'est
+        <strong>pas</strong> exécuté en cas d'erreur (<code>error</code> et
+        <code>complete</code> sont mutuellement exclusifs).</li>
+    </ul>
+    <pre><code>getDog() &#123;
+    this.httpService.getDog().subscribe(&#123;
+        next: (res) =&gt; &#123;
+            this.imageUrl.set(res.message);
+        &#125;,
+        error: (err) =&gt; &#123;
+            console.log(err);
+        &#125;,
+        complete: () =&gt; &#123;
+            console.log('opération terminée');
+        &#125;
+    &#125;);
+&#125;</code></pre>
+    <p>Pour une requête HTTP, le flux émet une seule valeur puis se termine :
+    <code>next</code> puis <code>complete</code> en cas de succès,
+    <code>error</code> seul en cas d'échec.</p>
+</div>
+
+<div class="card">
+    <h5>Démo</h5>
+    <div class="card">
+        <img [src]="imageUrl()" alt="image de chien">
+        <button (click)="getDog()">GetDog</button>
+    </div>
+
+    <div class="card">
+        <button (click)="getMovies()">GetMovies</button>
+        <ul>
+            @for (m of movies(); track m.title) {
+                <li>
+                    <p>{{m.title}}</p>
+                    <img [src]="m.posterURL" [alt]="m.title">
+                </li>
+            }
+        </ul>
+    </div>
+</div>

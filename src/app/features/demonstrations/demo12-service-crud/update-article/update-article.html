@@ -1,1 +1,30 @@
-<p>update-article works!</p>
+<h4>Update</h4>
+
+<div class="card">
+<div>
+    <label>Name</label>
+    <br>
+    <input class="border" type="text" [(ngModel)]="article.name">
+</div>
+
+<div>
+    <label>Description</label>
+    <br>
+    <textarea class="border" [(ngModel)]="article.description"></textarea>
+</div>
+
+<div>
+    <label>Stock</label>
+    <br>
+    <input class="border" type="number" [(ngModel)]="article.stock">
+</div>
+
+<div>
+    <label>Price</label>
+    <br>
+    <input class="border" type="number" [(ngModel)]="article.price">
+</div>
+<div>
+    <button (click)="update()">Update</button>
+</div>
+</div>

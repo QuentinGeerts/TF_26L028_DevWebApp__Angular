@@ -1,1 +1,8 @@
-<p>details-article works!</p>
+<h1>Details</h1>
+
+<div class="card">
+    <h4>{{article.name}}</h4>
+    <p>{{article.description}}</p>
+    <p>{{article.price}}€ : {{article.stock}}pc</p>
+    <button (click)="navigateToUpdate()">Update</button>
+</div>

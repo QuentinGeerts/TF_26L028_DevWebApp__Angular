@@ -1,10 +1,24 @@
 <div class="card">
     <h4>Parent</h4>
+    <p>On retrouve une autre possibilité pour transmettre du contenu du parent à l'enfant : la directive ng-content.</p>
+    <p>Il suffit de placer le contenu à transmettre entre les balises du composant enfant.</p>
+    <p>Et de les afficher dans le composant enfant en utilisant la directive ng-content.</p>
+</div>
+<div class="card">
+    <p>Balise "Enfant" dans le composant "Parent":</p>
+    <pre><code>< app-demo11-ng-content-enfant><p>Voici un texte du parent</p>< /app-demo11-ng-content-enfant></code></pre>
+</div>
 
-    <div class="card">
-        <app-demo11-ng-content-enfant>
-            <p>Voici un texte du parent</p>
-        </app-demo11-ng-content-enfant>
-    </div>
+<div class="card">
+    <p>Affichage dans le composant "Enfant":</p>
+    <p>L'utilsation de la directive ng-content permet d'afficher le contenu transmis depuis le parent.</p>
+    <pre><code>< ng-content>< /ng-content></code></pre>
+</div>
 
+
+<div class="card">
+
+    <app-demo11-ng-content-enfant>
+        <p>Voici un texte du parent</p>
+    </app-demo11-ng-content-enfant>
 </div>

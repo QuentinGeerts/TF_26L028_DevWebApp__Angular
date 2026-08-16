@@ -1,16 +1,45 @@
+<h1>Communication Parent / Enfant avec Input</h1>
 <div class="card">
-    <h4>Parent</h4>
-    <p>{{message}}</p>
     <p>Le parent peut transmetre une information à l'enfant au travers d'un input </p>
     
-    <div class="card">
-
-        <app-demo09-input-enfant 
-        [valeurRecu]="message"
-        [message2]="message"
-        [animal]="animalParent"
-        ></app-demo09-input-enfant>
-
+    <p>Le composant "Parent" contient une information à partager à un composant "Enfant"</p>
+    <p>Le composant "Enfant" devra configurer un "Input" ce qui permet de lui passer une information lors de l'appel du
+        composant au travers de sa balise</p>
+        <p>Il est possible de passer des types primitifs ou des objets complexes la syntaxe sera la même dans les deux cas</p>
+    <p>On retrouve deux syntaxe actuellement</p>
     </div>
 
-</div>
+    <div class="card">
+        <p>Voici l'ancienne syntaxe qui utilise @Input():</p>
+        <pre><code ngNonBindable>@Input() valeurRecu : string = 'valeur par défaut enfant';</code></pre>
+    </div>
+    <div class="card">
+        <p>Voici la nouvelle syntaxe qui utilise les signaux input() qui peut être typée input< T>():</p>
+        <pre><code ngNonBindable>message2 = input< string>('valeur par défaut 2')</code></pre>
+    </div>
+
+    <div class="card">
+        <p>Dans les deux cas, l'information est passée au travers de la balise du composant enfant dans la balise ouvrante en utilisant les
+            accolades []:</p>
+        <p>les accolades signifient que la valeur est passée par référence</p>
+        <pre><code ngNonBindable>< app-composant-enfant 
+[valeurRecu]="message"
+[message2]="message">
+< /app-composant-enfant></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card">
+
+            <h4>Parent</h4>
+            <p>Voici une valeur déclarée dans le composant "Parent" afficher grace au binding : {{message}}</p>
+        </div>
+        <div class="card">
+
+            <app-demo09-input-enfant 
+        [valeurRecu]="message" 
+        [message2]="message"
+        [animal]="animalParent"></app-demo09-input-enfant>
+        </div>
+
+    </div>

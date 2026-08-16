@@ -1,47 +1,87 @@
-<div>
-    <h4>Ajout Utilisateur</h4>
+<div class="card">
+    <h5>3. Regrouper plusieurs champs avec FormGroup et FormBuilder</h5>
+    <p>Dès qu'un formulaire contient plusieurs champs, on les regroupe dans un
+    <strong><code>FormGroup</code></strong> : un objet qui rassemble plusieurs
+    <code>FormControl</code> et expose la valeur du formulaire complet sous forme
+    d'objet, ainsi que son état global (le formulaire est valide si tous ses
+    contrôles le sont).</p>
+    <p>Plutôt que d'instancier chaque <code>FormControl</code> à la main, on utilise le
+    service <strong><code>FormBuilder</code></strong> : une « usine » qui allège la
+    syntaxe — chaque champ se déclare par un simple tableau
+    <code>[valeurInitiale, validateurs]</code>.</p>
+    <p>Prérequis : <code>ReactiveFormsModule</code> (le même que pour <code>FormControl</code>).</p>
 
-    <form [formGroup]="formUser" (ngSubmit)="addUser()">
+    <p>Côté TypeScript, on injecte le <code>FormBuilder</code> puis on construit le groupe —
+    chaque clé devient un champ du formulaire :</p>
+    <pre><code>private fb = inject(FormBuilder);
 
-        <div>
-            <label>Name</label>
-            <br>
-            <input class="border" type="text" formControlName="name">
-        </div>
-        <div>
-            <label>Email</label>
-            <br>
-            <input class="border" type="text" formControlName="email">
-        </div>
-        <div>
-            <label>Pasword</label>
-            <br>
-            <input class="border" type="text" formControlName="password">
-        </div>
-        <div>
-            <label>City</label>
-            <br>
-            <input class="border" type="text" formControlName="city">
-        </div>
-        <div>
-            <label>Image</label>
-            <br>
-            <input class="border" type="text" formControlName="image">
-        </div>
+this.formUser = this.fb.group(&#123;
+    name: ['', []],
+    email: ['', []],
+    password: ['', []],
+    city: ['', []],
+    image: ['', []]
+&#125;);</code></pre>
 
-        <button type="submit">Add</button>
-    </form>
+    <p>Côté HTML, la liaison se fait à deux niveaux :</p>
+    <ul>
+        <li><code>[formGroup]</code> sur la balise <code>< form>< /form></code> relie le
+        formulaire à l'objet <code>FormGroup</code>;</li>
+        <li><code>formControlName="cle"</code> sur chaque input le relie au contrôle
+        correspondant du groupe (la clé, sans crochets : c'est un nom, pas un binding).</li>
+    </ul>
+
+    <pre><code>< form [formGroup]="formUser" (ngSubmit)="addUser()"&gt;
+    < input type="text" formControlName="name">
+    < input type="email" formControlName="email">
+    ...
+    < button type="submit">Add< /button>
+    < /form></code></pre>
+
+    <p>À la soumission, <code>this.formUser.value</code> retourne directement un objet
+    <code>&#123; name, email, password, city, image &#125;</code> — prêt à être envoyé
+    à une API ou ajouté à une liste.</p>
+
+    <div class="card">
+        <h4>Ajout Utilisateur</h4>
+        <form [formGroup]="formUser" (ngSubmit)="addUser()">
+            <div>
+                <label>Name</label>
+                <br>
+                <input class="border" type="text" formControlName="name">
+            </div>
+            <div>
+                <label>Email</label>
+                <br>
+                <input class="border" type="email" formControlName="email">
+            </div>
+            <div>
+                <label>Password</label>
+                <br>
+                <input class="border" type="password" formControlName="password">
+            </div>
+            <div>
+                <label>City</label>
+                <br>
+                <input class="border" type="text" formControlName="city">
+            </div>
+            <div>
+                <label>Image</label>
+                <br>
+                <input class="border" type="text" formControlName="image">
+            </div>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+
+    <ul>
+        @for (u of listUser(); track u.email) {
+            <li>
+                <h5>{{u.name}}</h5>
+                <p>{{u.email}}</p>
+                <p>{{u.city}}</p>
+                <img [src]="u.imageUrl" [alt]="u.name" width="200">
+            </li>
+        }
+    </ul>
 </div>
-
-<ul>
-    @for (u of listUser(); track u) {
-        <li>
-            <h5>{{u.name}}</h5>
-            <p>{{u.email}}</p>
-            <p>{{u.password}}</p>
-            <p>{{u.city}}</p>
-            <img [src]="u.imageUrl" [alt]="u.name">
-        </li>
-    }
-</ul>
-

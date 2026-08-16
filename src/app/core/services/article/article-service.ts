@@ -1,5 +1,5 @@
 import { inject, Service, signal } from '@angular/core';
-import { Article } from '../../features/exercices/exo07-input-output/article.model';
+import { Article } from '../../../features/exercices/exo07-input-output/article.model';
 import { AuthService } from '../auth/auth-service';
 
 @Service()

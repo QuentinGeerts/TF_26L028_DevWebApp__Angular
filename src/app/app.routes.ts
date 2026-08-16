@@ -30,6 +30,12 @@ import { DetailsArticle } from './features/demonstrations/demo12-service-crud/de
 import { UpdateArticle } from './features/demonstrations/demo12-service-crud/update-article/update-article';
 import { Demo14FormControl } from './features/demonstrations/demo14-formulaires/demo14-form-control/demo14-form-control';
 import { Demo14FormGroup } from './features/demonstrations/demo14-formulaires/demo14-form-group/demo14-form-group';
+import { accesGuard } from './core/guards/acces-guard/acces-guard';
+import { activateChildGuard } from './core/guards/activate-child/activate-child-guard';
+import { Demo13Routage } from './features/demonstrations/demo13-routage/demo13-routage/demo13-routage';
+import { Demo14FormArray } from './features/demonstrations/demo14-formulaires/demo14-form-array/demo14-form-array';
+import { Demo18HttpClient } from './features/demonstrations/demo18-httpClient/demo18-http-client/demo18-http-client';
+import { Demo17Observables } from './features/demonstrations/demo17-observables/demo17-observables/demo17-observables';
 
 
 
@@ -116,14 +122,19 @@ export const routes: Routes = [
         component : AddArticle
       },
       {
-        path : 'details-article',
+        path : 'details-article/:id',
         component : DetailsArticle
       },
       {
-        path : 'update-article',
+        path : 'update-article/:id',
         component : UpdateArticle
       }
     ]
+  },
+  {
+    title : 'Demonstration 13 - Router & Activated route',
+    path : 'demo13',
+    component : Demo13Routage
   },
   {
     title : 'Demonstration 14 - Form Control',
@@ -134,6 +145,21 @@ export const routes: Routes = [
     title : 'Demonstration 14 - Form Group',
     path : 'demo14-form-group',
     component : Demo14FormGroup
+  },
+      {
+    title : 'Demonstration 14 - Form Array',
+    path : 'demo14-form-array',
+    component : Demo14FormArray
+  },
+    {
+    title : 'Demonstration 17 - Observable',
+    path : 'demo17-observable',
+    component : Demo17Observables
+  },
+      {
+    title : 'Demonstration 18 - HttpClient',
+    path : 'demo18-http',
+    component : Demo18HttpClient
   },
 
 

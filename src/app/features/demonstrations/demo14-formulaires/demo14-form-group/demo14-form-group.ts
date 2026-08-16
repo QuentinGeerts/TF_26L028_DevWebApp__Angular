@@ -18,8 +18,8 @@ listUser = signal<User[]>([
     name : 'bob',
     email : 'bob@mail.com',
     password : 'test1234',
-    city : 'bruxelles',
-    imageUrl : ''
+    city : 'Sarasota , Floride',
+    imageUrl : 'https://i.pinimg.com/736x/cb/eb/35/cbeb359b9a2581c05e1dc0f0f3629d6c.jpg'
   }
 ]) 
 
@@ -41,13 +41,17 @@ this.formUser = this.fb.group({
 }
 
 addUser(){
+  console.log(this.formUser.value.email);
+  console.log(this.formUser.get('name')?.value);
+  console.log(this.formUser.value['name']);
+  
 if(this.formUser.valid){
   const newUser : User = {
   id : this.listUser()[this.listUser().length -1].id + 1,
   name : this.formUser.value['name'],
   email : this.formUser.value['email'],
   password : this.formUser.value['password'],
-  city : this.formUser.value['city'],
+  city : this.formUser.value.city,
   imageUrl : this.formUser.get('image')?.value
 }
 

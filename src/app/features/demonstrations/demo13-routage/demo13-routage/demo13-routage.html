@@ -1,0 +1,48 @@
+<h4>Router</h4>
+
+<div class="card">
+    <p>Pour la navigation nous avons utilisé le "routerLink" qui permet d'éviter le comportement par défaut de la balise</p>
+    <code>< a href="">< /a></code>
+
+    <p>Dans certains cas il sera nécéssaire de déclencher la redirection lors d'un événement ou après celui-ci</p>
+    <p>Nous retrouvons pour cela le <code>Router</code> qui sera injecté comme pour un service et qui nous donne accès à plusieurs methodes</p>
+    <p><code>navigate(['/chemin', param])</code> : navigation par segments de route (tableau), supporte la navigation relative.</p>
+    <p><code>navigateByUrl('/chemin/valeur')</code> : navigation par URL complète (string), toujours absolue.</p>
+    <p>Le router pourra être utilisé dans une methode pour permettre la redirection à un moment donné , comme après la soumission d'un formulaire</p>
+
+    <div class="card">
+        <p>Injection du router dans un composant</p>
+        <pre><code>router = inject(Router)</code></pre>
+    </div>
+
+    <div class="card">
+        <p>Utilisation du router dans un composant</p>
+        <pre><code>navigateToPage(id:number) &#123;
+            this.router.navigate(['/details',id])
+            &#125;</code></pre>
+    </div>
+</div>
+
+<h4>ActivatedRoute</h4>
+
+<div class="card">
+<p>Il est possible de passer des informations par la route , comme un id vu ci-dessus.</p>
+<p>Par exemple sur une page liste on est redirigé vers une page détail</p>
+<p>Il sera donc possible de récupérer cette informations dans le composant sur lequel la redirection à lieu</p>
+<p>Pour cela il faudra utiliser <code>ActivatedRoute</code> qui nous permet de récupérer la route à un moment donné , comme au chargement du composant</p>
+<p>Il suffira d'utiliser une capture de la route pour récupérer un paramètres de cette route .</p>
+<p>Le paramètre sera défini dans le fichier <code>app.routes.ts</code> avec la syntaxe : <code>:nom_du_paramètre</code></p>
+<p>Comme : <code>update-article/:id</code></p>
+<p><code>ActivatedRoute</code> devra être injecté dans notre composant pour pouvoir être utilsé.</p>
+<code>activatedRoute = inject(ActivatedRoute)</code>
+<p>Il sera possible à partir du moment ou ce paramètre est défini de récupérer l'information dans le composant en utilisant <code>ActivatedRoute</code></p>
+<code>const id = +this.activatedRoute.snapshot.params['id']</code>
+<p>Ce qui permet de charger un élément spécifique en fonction de paramètre passé : produit 1 ou produit 2 ...</p>
+<pre><code>
+      ngOnInit()&#123;
+    const id = +this.activatedRoute.snapshot.params['id']
+    this.article = this.articleService.getArticleById(id)
+  &#125;
+</code></pre>
+<p>Le symbole <code>+</code> ici permet une conversion en Number du paramètre , la methode <code>Number()</code> fonctionne également</p>
+</div>

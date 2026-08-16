@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Article } from '../../../exercices/exo07-input-output/article.model';
-import { ArticleService } from '../../../../core/article/article-service';
+import { ArticleService } from '../../../../core/services/article/article-service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 

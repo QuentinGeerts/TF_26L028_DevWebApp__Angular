@@ -1,24 +1,50 @@
 <h4>Form Control</h4>
 
-<div class="card">
-    <h5>Binding two-way</h5>
-    <input type="text" [(ngModel)]="valueTwoWay">
-    <p>Value Two-way : {{valueTwoWay}}</p>
+<p>Angular propose deux approches pour lier un champ de saisie à une valeur TypeScript :
+le <strong>two-way binding</strong> (simple et rapide) et les <strong>formulaires réactifs</strong>
+(plus puissants : validation, suivi d'état, etc.).</p>
 
+<div class="card">
+    <h5>1. Two-way binding avec ngModel</h5>
+    <p>L'approche la plus directe : l'input et la propriété TypeScript restent synchronisés
+    dans les deux sens — toute saisie met à jour la propriété, et inversement.</p>
+    <p>Prérequis : importer <code>FormsModule</code>, puis utiliser la syntaxe
+    <code>[(ngModel)]</code> :</p>
+    <pre><code>&lt;input type="text" [(ngModel)]="valueTwoWay"&gt;</code></pre>
+
+    <div class="card">
+        <input type="text" class="border" [(ngModel)]="valueTwoWay">
+        <p>Valeur : {{valueTwoWay}}</p>
+    </div>
 </div>
 
 <div class="card">
-<h5>FormControl</h5>
+    <h5>2. Formulaire réactif avec FormControl</h5>
+    <p>Ici, le champ est représenté par un <strong>objet TypeScript</strong> de type
+    <code>FormControl</code>. C'est lui qui détient la valeur, mais aussi l'état du champ :
+    validité, champ modifié ou non (<code>dirty</code>), visité ou non (<code>touched</code>)...</p>
+    <p>Prérequis : importer <code>ReactiveFormsModule</code>.</p>
 
-<p>Necessite D'importer le ReactiveFormModule</p>
-<p>Une balise form qui permet de déclencher une methode </p>
-<p>un input qui sera lié grace au formcontrol</p>
+    <p>Côté TypeScript, on déclare le contrôle (valeur initiale + validateurs éventuels) :</p>
+    <pre><code>valueFormControl = new FormControl('', []);</code></pre>
 
-<form (ngSubmit)="soumissionForm()">
-    <label>valeur form-control</label>
-    <input class="border-1" type="text" placeholder="entrez une valeur" [formControl]="valueFormControl">
+    <p>Côté HTML, deux liaisons entrent en jeu :</p>
+    <ul>
+        <li><code>[formControl]</code> relie l'input à l'objet <code>FormControl</code>;</li>
+        <li><code>(ngSubmit)</code> sur la balise <code>&lt;form&gt;</code> déclenche une méthode
+        à la soumission.</li>
+    </ul>
 
-    <button type="submit">soumettre</button>
-</form>
+    <pre><code>&lt;form (ngSubmit)="soumissionForm()"&gt;
+    &lt;input type="text" placeholder="entrez une valeur" [formControl]="valueFormControl"&gt;
+    &lt;button type="submit"&gt;soumettre&lt;/button&gt;
+&lt;/form&gt;</code></pre>
 
+    <div class="card">
+        <form (ngSubmit)="soumissionForm()">
+            <input class="border" type="text" placeholder="entrez une valeur" [formControl]="valueFormControl">
+            <button type="submit">soumettre</button>
+        </form>
+        <p>Valeur du formulaire : {{valeurAffichage()}}</p>
+    </div>
 </div>

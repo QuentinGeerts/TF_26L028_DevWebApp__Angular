@@ -1,0 +1,21 @@
+ul{
+    display: flex;
+    
+    li{
+        margin: 0 0.5rem;
+        a{
+            border-radius: 8px;
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        a:hover{
+            background-color: red;
+            color: white;
+        }
+    }
+}
+
+.d-block{
+    display: block;
+}

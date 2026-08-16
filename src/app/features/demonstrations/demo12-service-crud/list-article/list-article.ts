@@ -1,7 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Article } from '../../../exercices/exo07-input-output/article.model';
 import { CommonModule } from '@angular/common';
-import { ArticleService } from '../../../../core/article/article-service';
+import { ArticleService } from '../../../../core/services/article/article-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-article',
@@ -17,6 +18,8 @@ export class ListArticle implements OnInit{
   // injection du service
   private articleService = inject(ArticleService)
 
+  router = inject(Router)
+
   // constructor(private articleService : ArticleService){}
   
   ngOnInit(): void {
@@ -28,6 +31,10 @@ export class ListArticle implements OnInit{
   deleteArticle(id : number){
     // appel du service
     this.articleService.deleteArticle(id)
+  }
+
+  navigateToDetails(id : number){
+    this.router.navigate(['/demo-service/details-article',id])
   }
 
 }
