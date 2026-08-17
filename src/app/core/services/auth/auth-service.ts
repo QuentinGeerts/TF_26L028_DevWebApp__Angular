@@ -13,7 +13,6 @@ export class AuthService {
     }
 
     login(){
-
         this.isLogged.update((v) => !v)
         sessionStorage.setItem('isLogged','true')
         localStorage.setItem('token' , 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')

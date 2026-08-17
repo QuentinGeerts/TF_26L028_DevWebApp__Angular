@@ -1,5 +1,133 @@
-<h4>Interceptor</h4>
+<h1>Interceptor</h1>
 
 <div class="card">
+    <h4>Qu'est-ce qu'un interceptor ?</h4>
+    <p>Un <strong>interceptor</strong> est une fonction qui s'insère dans la chaîne
+    HTTP : chaque requête sortante et chaque réponse entrante passent par lui.
+    C'est un <strong>point de passage unique</strong> pour toute la couche HTTP
+    de l'application.</p>
+    <p>Plutôt que de répéter la même logique dans chaque service (ajouter le token,
+    logger, gérer les erreurs...), on l'écrit une seule fois dans un interceptor —
+    tous les appels <code>HttpClient</code> en profitent automatiquement.</p>
+</div>
 
+<div class="card">
+    <h4>Cas d'usage typiques</h4>
+    <ul>
+        <li><strong>Authentification</strong> : ajouter le header
+        <code>Authorization: Bearer ...</code> sur chaque requête ;</li>
+        <li><strong>Gestion globale des erreurs</strong> : rediriger vers le login
+        sur un 401, afficher une notification sur un 500 ;</li>
+        <li><strong>Logging</strong> : tracer les requêtes et mesurer leur durée ;</li>
+        <li><strong>Loader global</strong> : afficher un indicateur de chargement
+        tant qu'une requête est en cours ;</li>
+        <li><strong>Headers communs</strong> : langue, version d'API, etc.</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h4>Créer un interceptor</h4>
+    <p>Un interceptor moderne est une simple <strong>fonction</strong> typée
+    <code>HttpInterceptorFn</code>. Elle reçoit la requête et la fonction
+    <code>next</code> qui poursuit la chaîne :</p>
+    <pre><code>// logging.interceptor.ts
+import &#123; HttpInterceptorFn &#125; from '@angular/common/http';
+
+export const loggingInterceptor: HttpInterceptorFn = (req, next) =&gt; &#123;
+  console.log('Requête sortante :', req.method, req.url);
+
+  // On laisse la requête continuer son chemin
+  return next(req);
+&#125;;</code></pre>
+    <p>Comme dans un resolver ou un guard fonctionnel, <code>inject()</code> est
+    utilisable directement dans le corps de la fonction pour accéder aux services.</p>
+</div>
+
+<div class="card">
+    <h4>Enregistrer l'interceptor</h4>
+    <p>On le déclare au niveau du <code>provideHttpClient</code>, dans la
+    configuration de l'application :</p>
+    <pre><code>// app.config.ts
+provideHttpClient(
+  withInterceptors([loggingInterceptor])
+)</code></pre>
+    <p>À ne pas confondre avec <code>withInterceptorsFromDi()</code>, qui ne sert
+    qu'à brancher les anciens interceptors écrits sous forme de classes
+    (code legacy d'avant Angular 15).</p>
+</div>
+
+<div class="card">
+    <h4>Modifier la requête : toujours cloner</h4>
+    <p>Les requêtes HTTP sont <strong>immuables</strong> : on ne modifie jamais
+    <code>req</code> directement, on en crée une copie modifiée avec
+    <code>req.clone()</code>. Exemple classique — ajouter le token JWT :</p>
+    <pre><code>// auth.interceptor.ts
+export const authInterceptor: HttpInterceptorFn = (req, next) =&gt; &#123;
+  const token = inject(AuthService).token();
+
+  // Pas de token : la requête part telle quelle
+  if (!token) &#123;
+    return next(req);
+  &#125;
+
+  // Copie de la requête avec le header en plus
+  const cloned = req.clone(&#123;
+    setHeaders: &#123; Authorization: `Bearer $&#123;token&#125;` &#125;
+  &#125;);
+
+  return next(cloned);
+&#125;;</code></pre>
+</div>
+
+<div class="card">
+    <h4>Intercepter la réponse et les erreurs</h4>
+    <p><code>next(req)</code> retourne un <code>Observable</code> : on peut donc y
+    brancher des opérateurs RxJS pour observer la réponse ou réagir aux erreurs.
+    Exemple — déconnecter l'utilisateur sur un 401 :</p>
+    <pre><code>// error.interceptor.ts
+export const errorInterceptor: HttpInterceptorFn = (req, next) =&gt; &#123;
+  const router = inject(Router);
+
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) =&gt; &#123;
+      if (error.status === 401) &#123;
+        router.navigateByUrl('/login');
+      &#125;
+
+      // On re-propage l'erreur, sinon le service appelant ne la verra jamais
+      return throwError(() =&gt; error);
+    &#125;)
+  );
+&#125;;</code></pre>
+</div>
+
+<div class="card">
+    <h4>L'ordre des interceptors</h4>
+    <p>Plusieurs interceptors forment une <strong>chaîne</strong> : ils s'exécutent
+    dans l'ordre du tableau pour la requête, puis en ordre <strong>inverse</strong>
+    pour la réponse :</p>
+    <pre><code>provideHttpClient(
+  withInterceptors([loggingInterceptor, authInterceptor, errorInterceptor])
+)</code></pre>
+    <pre><code>Requête  : composant → logging → auth → error → serveur
+Réponse  : serveur → error → auth → logging → composant</code></pre>
+</div>
+
+<div class="card">
+    <h4>Bonnes pratiques</h4>
+    <ul>
+        <li><strong>Une responsabilité par interceptor</strong> : un pour l'auth, un
+        pour les erreurs, un pour le logging — plus lisible et testable qu'un
+        interceptor fourre-tout ;</li>
+        <li>Toujours passer par <code>req.clone()</code> pour modifier une requête —
+        jamais de mutation directe ;</li>
+        <li>Dans un <code>catchError</code>, toujours re-propager avec
+        <code>throwError</code> : une erreur avalée dans l'interceptor devient
+        invisible pour le reste de l'application ;</li>
+        <li>Exclure certaines routes si besoin : un simple test sur
+        <code>req.url</code> permet par exemple de ne pas envoyer le token vers
+        les endpoints publics (<code>/login</code>, <code>/register</code>) ;</li>
+        <li>Les interceptors ne s'appliquent qu'aux appels <code>HttpClient</code> :
+        un <code>fetch()</code> natif passe à côté de toute la chaîne.</li>
+    </ul>
 </div>
