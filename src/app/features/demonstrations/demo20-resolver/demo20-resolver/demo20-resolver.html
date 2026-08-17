@@ -1,1 +1,143 @@
-<p>demo20-resolver works!</p>
+<h1>Resolver</h1>
+
+<div class="card">
+    <h4>Qu'est-ce qu'un resolver ?</h4>
+    <p>Un <strong>resolver</strong> permet de récupérer des données <strong>avant</strong>
+    le chargement du composant. Le routeur exécute le resolver, attend le résultat,
+    puis active le composant : celui-ci démarre avec ses données déjà prêtes.</p>
+    <p>Sans resolver, le flux habituel est inversé : le composant s'affiche d'abord
+    (vide), lance son appel HTTP dans <code>ngOnInit</code>, puis se remplit à
+    l'arrivée de la réponse — d'où un « flash » de contenu vide et des
+    <code>&#64;if</code> de garde un peu partout dans le template.</p>
+</div>
+
+<div class="card">
+    <h4>Avec ou sans resolver ?</h4>
+    <ul>
+        <li><strong>Sans resolver</strong> : clic → navigation immédiate → composant
+        vide → chargement → affichage. L'utilisateur voit un état intermédiaire ;</li>
+        <li><strong>Avec resolver</strong> : clic → chargement des données → navigation
+        → composant complet dès le premier rendu. L'utilisateur reste sur la page
+        précédente pendant le chargement.</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h4>Créer un resolver</h4>
+    <p>Un resolver moderne est une simple <strong>fonction</strong> typée
+    <code>ResolveFn&lt;T&gt;</code>. On y accède aux services via <code>inject()</code>,
+    comme dans un guard fonctionnel :</p>
+    <pre><code>// car.resolver.ts
+import &#123; ResolveFn, Router &#125; from '@angular/router';
+import &#123; inject &#125; from '@angular/core';
+import &#123; Car &#125; from '../../features/car-features/car.model';
+import &#123; CarService &#125; from '../services/car/car-service';
+
+export const carResolver: ResolveFn&lt;Car | null&gt; = (route, state) =&gt; &#123;
+
+  const carService = inject(CarService)
+  const id = route.paramMap.get('id')
+  const router = inject(Router)
+
+  // Pas d'id dans l'URL : rien à charger
+  if(!id)&#123;
+    return null;
+  &#125;
+
+  const car : Car | undefined = carService.getCarById(parseInt(id))
+
+  // Voiture introuvable : on redirige et on abandonne
+  if(car === undefined)&#123;
+    router.navigateByUrl('')
+    return null;
+  &#125;
+
+  return car;
+&#125;;</code></pre>
+    <p>La fonction peut retourner une <strong>valeur synchrone</strong> (comme ici,
+    le service travaillant en mémoire), un <code>Observable</code> ou une
+    <code>Promise</code>. Les appels <code>HttpClient</code> conviennent
+    parfaitement : ils émettent leur réponse puis complètent aussitôt.</p>
+</div>
+
+<div class="card">
+    <h4>Déclarer le resolver sur la route</h4>
+    <p>On l'attache à la route via la propriété <code>resolve</code>, un objet
+    <strong>clé / resolver</strong> :</p>
+    <pre><code>// app.routes.ts
+export const routes: Routes = [
+    &#123;
+        path: 'cars/:id',
+        component: CarDetailComponent,
+        resolve: &#123; car: carResolver &#125;
+    &#125;
+];</code></pre>
+    <p>La clé choisie (<code>car</code>) n'est pas anodine : c'est sous ce nom que
+    la donnée résolue sera exposée au composant.</p>
+</div>
+
+<div class="card">
+    <h4>Récupérer la donnée dans le composant</h4>
+    <p>Approche moderne (Angular 16+) : activer le binding des données de route vers
+    les inputs dans la configuration du routeur...</p>
+    <pre><code>// app.config.ts
+provideRouter(routes, withComponentInputBinding())</code></pre>
+    <p>...la donnée arrive alors directement dans un <strong>input signal</strong>
+    portant le même nom que la clé du <code>resolve</code> :</p>
+    <pre><code>export class CarDetailComponent &#123;
+    // Reçoit automatiquement la valeur résolue sous la clé 'car'
+    car = input.required&lt;Car | null&gt;();
+&#125;</code></pre>
+    <p>Alternative classique via <code>ActivatedRoute</code> :</p>
+    <pre><code>export class CarDetailComponent &#123;
+    private route = inject(ActivatedRoute);
+
+    car = this.route.snapshot.data['car'] as Car | null;
+&#125;</code></pre>
+    <p>Le type suit celui du resolver (<code>Car | null</code>) : un
+    <code>&#64;if (car())</code> dans le template couvre le cas absent.</p>
+</div>
+
+<div class="card">
+    <h4>Gérer les erreurs</h4>
+    <p>Si un resolver échoue sans rien prévoir, la navigation est
+    <strong>annulée silencieusement</strong> : l'utilisateur reste sur la page
+    précédente, sans aucun message. Dans notre resolver synchrone, le cas est déjà
+    couvert : voiture introuvable → <code>router.navigateByUrl('')</code> puis
+    <code>return null</code>.</p>
+    <p>Le jour où <code>CarService</code> passera sur <code>HttpClient</code>, le même
+    réflexe s'écrit avec <code>catchError</code> :</p>
+    <pre><code>export const carResolver: ResolveFn&lt;Car | null&gt; = (route) =&gt; &#123;
+    const router = inject(Router);
+
+    return inject(CarService)
+        .getCarById(Number(route.paramMap.get('id')))
+        .pipe(
+            catchError(() =&gt; &#123;
+                router.navigateByUrl('');
+                return EMPTY; // complète sans émettre : navigation abandonnée proprement
+            &#125;)
+        );
+&#125;;</code></pre>
+</div>
+
+<div class="card">
+    <h4>Limites et bonnes pratiques</h4>
+    <ul>
+        <li>La navigation est <strong>bloquée</strong> pendant le chargement : sur un
+        appel lent, le clic semble ne rien faire. Prévoir un indicateur global en
+        écoutant les événements du routeur (<code>NavigationStart</code> /
+        <code>NavigationEnd</code>) ;</li>
+        <li>À réserver aux données <strong>indispensables</strong> au premier rendu ;
+        pour du contenu secondaire, un chargement classique dans le composant reste
+        préférable ;</li>
+        <li>L'Observable retourné doit <strong>compléter</strong> : un
+        <code>BehaviorSubject</code> exposé tel quel bloque la navigation
+        indéfiniment (le limiter avec <code>take(1)</code> si besoin) ;</li>
+        <li>Le resolver est <strong>ré-exécuté</strong> à chaque changement de
+        paramètre de la route (navigation de <code>/cars/1</code> vers
+        <code>/cars/2</code>) ;</li>
+        <li>On centralise la récupération des données dans le resolver et le service :
+        le composant reste simple, sans logique de chargement, et donc testable.</li>
+    </ul>
+</div>

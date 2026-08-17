@@ -2,13 +2,15 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { tokenInterceptor } from './core/interceptor/token-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    // obligatoire pour faire des requettes HTTP
-    provideHttpClient()
+    //provideHttpClient(): obligatoire pour faire des requettes HTTP
+    //withInterceptors([]) : permet de définir quel interceptor utilisé lors de requette
+    provideHttpClient(withInterceptors([tokenInterceptor]))
   ]
 };

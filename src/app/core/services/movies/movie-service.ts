@@ -11,4 +11,8 @@ export class MovieService {
     getMovie() : Observable<Movie[]>{
         return this.httpClient.get<Movie[]>('https://api.sampleapis.com/movies/animation')
     }
+
+    getMovieAction() : Observable<Movie[]>{
+        return this.httpClient.get<Movie[]>('https://api.sampleapis.com/movies/action')
+    }
 }

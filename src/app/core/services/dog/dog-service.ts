@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DogReponse } from '../../../features/demonstrations/demo18-httpClient/dog.model';
 
@@ -9,6 +9,8 @@ export class DogService {
     httpClient = inject(HttpClient)
 
     APIURL = 'https://dog.ceo/api/breeds'
+
+    listPictures = signal<string[]>([])
 
 
     // methode qui renvoie un observable ( l'observable contient l'information)
@@ -23,7 +25,7 @@ export class DogService {
 
     updateDog(updateData : string,id: number){
         // PUT
-        return this.httpClient.put<DogReponse>(`ùrl/${id}`,updateData)
+        return this.httpClient.put<DogReponse>(`url/${id}`,updateData)
     }
 
     deleteDog(id : number){

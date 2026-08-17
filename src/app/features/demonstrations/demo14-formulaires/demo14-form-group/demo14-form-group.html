@@ -49,6 +49,9 @@ this.formUser = this.fb.group(&#123;
                 <label>Name</label>
                 <br>
                 <input class="border" type="text" formControlName="name">
+                @if(formUser.get('name')?.hasError('required') && formUser.get('name')?.dirty){
+                    <p>message d'erreur</p>
+                }
             </div>
             <div>
                 <label>Email</label>
