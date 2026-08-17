@@ -12,10 +12,7 @@ export class AuthService {
         }
     }
 
-    login({email,password } : {email : string , password : string}){
-        if(email === ''){
-
-        }
+    login(){
 
         this.isLogged.update((v) => !v)
         sessionStorage.setItem('isLogged','true')
